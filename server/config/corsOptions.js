@@ -1,0 +1,17 @@
+const allowedOrigins = require('./allowedOrigins');
+
+//options for CORS middleware, allowing only origin present in allowedOrigins or no origin for Postman for example
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+
+        } else {
+            callback(new Error('Not Allowed by CORS'))
+        }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200 //instead of 204
+};
+
+module.exports = corsOptions;
