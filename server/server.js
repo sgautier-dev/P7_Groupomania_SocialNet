@@ -25,6 +25,7 @@ app.use(cors(corsOptions));// with Cors options
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/root'));
+app.use('/users', require('./routes/userRoutes'));
 
 // setting routes to 404 if no other route is matching
 app.all('*', (req, res) => {
