@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    active: {
+        type: Boolean,
+        default: true
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);
