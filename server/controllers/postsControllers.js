@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
 
 /**
-* @desc Get all posts 
+* @desc Get all posts with user
 * @route GET /posts
 * @access Private
 */
@@ -33,14 +33,19 @@ const getAllPosts = asyncHandler(async (req, res) => {
 */
 const createNewPost = asyncHandler(async (req, res) => {
     const { user, text } = req.body;
+    let imageUrl = '';
 
     // Confirm data
     if (!user || !text) {
         return res.status(400).json({ message: 'All valid post data required' });
     }
+    // if image attached
+    if (req.file) {
+        imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    };
 
     // Create and store the new post 
-    const post = await Post.create({ user, text });
+    const post = await Post.create({ user, text, imageUrl });
 
     if (post) { // Created 
         return res.status(201).json({ message: 'New post created' });
@@ -70,6 +75,20 @@ const updatePost = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'Post not found' });
     }
 
+    // if image attached delete old image file from disk and replace imageUrl
+    if (req.file) {
+        const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        const filename = post.imageUrl.split('/images/')[1];
+        if (filename) {
+            fs.unlink(`images/${filename}`, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+        post.imageUrl = imageUrl;
+    };
+
     post.user = user;
     post.text = text;
 
@@ -84,7 +103,7 @@ const updatePost = asyncHandler(async (req, res) => {
 * @access Private
 */
 const deletePost = asyncHandler(async (req, res) => {
-    const { id } = req.body
+    const { id, imageUrl } = req.body
 
     // Confirm data, if id exists and is valid
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
@@ -97,6 +116,18 @@ const deletePost = asyncHandler(async (req, res) => {
     if (!post) {
         return res.status(400).json({ message: 'Post not found' });
     }
+
+    // if image attached delete image file from disk
+    if (imageUrl) {
+        const filename = imageUrl.split('/images/')[1];
+        if (filename) {
+            fs.unlink(`images/${filename}`, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+    };
 
     const result = await post.deleteOne();
 
