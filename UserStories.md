@@ -5,7 +5,7 @@
 5.  [] utilisateur peut se déconnecter
 6.  [] la session persiste pendant la connection
 7.  [] données de connection sécurisée
-8.  [] page d'accueil
+8.  [] page d'accueil avec les posts
 9.  [] liste des posts du plus récent au plus ancien
 10. [] création des posts
 11. [] utilisateur peut créer un post

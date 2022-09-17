@@ -24,6 +24,7 @@ app.use(cors(corsOptions));// with Cors options
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
+// mounting routes
 app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/userRoutes'));
 app.use('/posts', require('./routes/postRoutes'));
@@ -42,11 +43,13 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
+//start listening only when the database is open
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
 });
 
+// on db error logEvents
 mongoose.connection.on('error', err => {
     console.log(err);
     logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log');
