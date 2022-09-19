@@ -225,23 +225,23 @@ tr {
   background-color: var(--INACTIVE);
 }
 
-/* ||  NOTE */
+/* ||  POST */
 
-.note__created,
-.note__updated,
-.note__username {
+.post__created,
+.post__updated,
+.post__username {
   display: none;
 }
 
-.note__status {
+.post__status {
   font-weight: bold;
 }
 
-.note__status--open {
+.post__status--open {
   color: var(--STATUS-OPEN);
 }
 
-.note__status--completed {
+.post__status--completed {
   color: var(--STATUS-COMPLETE);
 }
 
@@ -354,13 +354,13 @@ tr {
     font-size: 1.5rem;
   }
 
-  .table--notes {
+  .table--posts {
     grid-template-columns: repeat(3, 1fr) 2fr repeat(2, 1fr);
   }
 
-  .note__created,
-  .note__updated,
-  .note__username {
+  .post__created,
+  .post__updated,
+  .post__username {
     display: block
   }
 

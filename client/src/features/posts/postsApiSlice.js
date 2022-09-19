@@ -29,10 +29,10 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
-                        { type: 'User', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'User', id }))
+                        { type: 'Post', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Post', id }))
                     ]
-                } else return [{ type: 'User', id: 'LIST' }]
+                } else return [{ type: 'Post', id: 'LIST' }]
             }
         }),
     }),
@@ -54,7 +54,7 @@ const selectPostsData = createSelector(
 //getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
     selectAll: selectAllPosts,
-    selectById: selectUserById,
-    selectIds: selectUserIds
+    selectById: selectPostById,
+    selectIds: selectPostIds
     // Pass in a selector that returns the posts slice of state
 } = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState);
