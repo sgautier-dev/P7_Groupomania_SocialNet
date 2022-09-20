@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
-const USER_REGEX = /^[A-z]{3,20}$/;
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;//To be updated
-const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;//To be updated
+const USER_REGEX = /^[a-zA-Zàâéèëêïîôùüç'\s-]{3,20}$/;
+const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
 const NewUserForm = () => {
 
@@ -31,10 +31,12 @@ const NewUserForm = () => {
   useEffect(() => {
     setValidUsername(USER_REGEX.test(username))
   }, [username]);
-
+  
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email))
   }, [email]);
+
+  console.log(validEmail)
 
   useEffect(() => {
     setValidPassword(PWD_REGEX.test(password))
@@ -67,6 +69,7 @@ const NewUserForm = () => {
 
   const errClass = isError ? "errmsg" : "offscreen";
   const validUserClass = !validUsername ? 'form__input--incomplete' : '';
+  const validEmailClass = !validEmail ? 'form__input--incomplete' : '';
   const validPwdClass = !validPassword ? 'form__input--incomplete' : '';
   //const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : '';
 
@@ -89,7 +92,7 @@ const NewUserForm = () => {
           </div>
         </div>
         <label className="form__label" htmlFor="username">
-          Nom d'utilisateur: <span className="nowrap">[3-20 letters]</span></label>
+          Nom d'utilisateur: <span className="nowrap">[3-20 lettres]</span></label>
         <input
           className={`form__input ${validUserClass}`}
           id="username"
@@ -101,9 +104,9 @@ const NewUserForm = () => {
         />
 
         <label className="form__label" htmlFor="email">
-          E-mail: <span className="nowrap">[4-12 chars incl. @.-]</span></label>
+          E-mail: <span className="nowrap">[valide email incl. @.-]</span></label>
         <input
-          className={`form__input ${validPwdClass}`}
+          className={`form__input ${validEmailClass}`}
           id="email"
           name="email"
           type="email"

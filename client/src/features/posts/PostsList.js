@@ -8,7 +8,11 @@ const PostsList = () => {
     isSuccess,
     isError,
     error
-} = useGetPostsQuery();
+} = useGetPostsQuery(undefined, {
+    pollingInterval: 15000, //re-fetching data every 15s
+    refetchOnFocus: true, //re-fetching data if user put focus on an other window
+    refetchOnMountOrArgChange: true //re-fetching data on the component mounting or changing
+});
 
 let content;
 

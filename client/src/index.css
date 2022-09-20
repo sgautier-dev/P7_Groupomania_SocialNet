@@ -13,15 +13,17 @@
   --BGCOLOR: #4e5166;
   --BORDER-COLOR: #FFF;
   --COLOR: #FFF;
-  --ERROR: firebrick;
+  --ERROR: #fd2d01;
+  --INCOMPLETE: #fd2d01;
   --INACTIVE: lightgray;
   --LINK-COLOR: whitesmoke;
-  --LINK-HOVER: rgba(245, 245, 245, 0.9);
+  --LINK-HOVER: #ffd7d7;
   --NOTE-BGCOLOR: hsla(240, 64%, 27%, 0.65);
   --STATUS-COMPLETE: limegreen;
   --STATUS-OPEN: firebrick;
   --TABLE-BGCOLOR: #FFF;
   --TABLE-COLOR: #000;
+  --ICON-COLOR: #ffd7d7;
 }
 
 /* || UTILITY CLASSES */
@@ -43,7 +45,7 @@
   font-size: 2.5rem;
   background-color: transparent;
   border: none;
-  color: var(--COLOR);
+  color: var(--ICON-COLOR);
   display: grid;
   place-content: center;
 }
@@ -286,8 +288,8 @@ tr {
 }
 
 .form__input--incomplete {
-  border: 1px solid red;
-  outline: 1px solid red;
+  border: 1px solid var(--INCOMPLETE);
+  outline: 1px solid var(--INCOMPLETE);
 }
 
 

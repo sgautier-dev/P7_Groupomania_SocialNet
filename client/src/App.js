@@ -10,6 +10,7 @@ import EditUser from './features/users/EditUser';
 import NewUserForm from './features/users/NewUserForm';
 import EditPost from './features/posts/EditPost';
 import NewPost from './features/posts/NewPost';
+import Prefetch from './features/auth/Prefetch';
 
 function App() {
   return (
@@ -18,24 +19,26 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
 
-        <Route path="dash" element={<DashLayout />}>
+        <Route element={<Prefetch />}>
+          <Route path="dash" element={<DashLayout />}>
 
-          <Route index element={<Welcome />} />
+            <Route index element={<Welcome />} />
 
-          <Route path="users">
-            <Route index element={<UsersList />} />
-            <Route path=":id" element={<EditUser />} />
-            <Route path="new" element={<NewUserForm />} />
-          </Route>
+            <Route path="users">
+              <Route index element={<UsersList />} />
+              <Route path=":id" element={<EditUser />} />
+              <Route path="new" element={<NewUserForm />} />
+            </Route>
 
-          <Route path="posts">
-            <Route index element={<PostsList />} />
-            <Route path=":id" element={<EditPost />} />
-            <Route path="new" element={<NewPost />} />
-          </Route>
+            <Route path="posts">
+              <Route index element={<PostsList />} />
+              <Route path=":id" element={<EditPost />} />
+              <Route path="new" element={<NewPost />} />
+            </Route>
 
-        </Route>{/* End Dash */}
-
+          </Route>{/* End Dash */}
+        </Route>
+        
       </Route>
     </Routes>
   );
