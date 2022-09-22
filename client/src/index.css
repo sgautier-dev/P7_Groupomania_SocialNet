@@ -19,11 +19,9 @@
   --LINK-COLOR: whitesmoke;
   --LINK-HOVER: #ffd7d7;
   --NOTE-BGCOLOR: hsla(240, 64%, 27%, 0.65);
-  --STATUS-COMPLETE: limegreen;
-  --STATUS-OPEN: firebrick;
   --TABLE-BGCOLOR: #FFF;
   --TABLE-COLOR: #000;
-  --ICON-COLOR: #ffd7d7;
+  --ICON-COLOR: #FFF;
 }
 
 /* || UTILITY CLASSES */
@@ -33,6 +31,11 @@
   color: var(--ERROR);
   padding: 0.25em;
   margin-bottom: 0.5em;
+}
+
+.errmsg a:any-link {
+  color: var(--ERROR);
+  text-decoration: underline;
 }
 
 .nowrap {
@@ -53,6 +56,7 @@
 .icon-button:hover,
 .icon-button:focus-visible {
   transform: scale(1.2);
+  color: var(--LINK-HOVER);
 }
 
 .icon-button[disabled] {
@@ -237,14 +241,6 @@ tr {
 
 .post__status {
   font-weight: bold;
-}
-
-.post__status--open {
-  color: var(--STATUS-OPEN);
-}
-
-.post__status--completed {
-  color: var(--STATUS-COMPLETE);
 }
 
 

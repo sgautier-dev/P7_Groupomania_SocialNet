@@ -8,7 +8,7 @@ const Public = () => {
                 <h1>Bienvenue sur <span className="nowrap">GroupoNet!</span></h1>
             </header>
             <main className="public__main">
-                <Link to="/login">Login Salarié</Link>
+                <Link to="/login">Connection</Link>
             </main>
             <footer>
                 <p>Le réseau social d'entreprise de Groupomania.</p>

@@ -4,8 +4,10 @@ import NewPostForm from './NewPostForm.js';
 
 const NewPost = () => {
     const users = useSelector(selectAllUsers);
+    
+    if (!users?.length) return <p>Non disponible actuellement</p>
 
-    const content = users ? <NewPostForm users={users} /> : <p>En cours de chargement...</p>;
+    const content = <NewPostForm users={users} />
 
     return content;
 }
