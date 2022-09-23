@@ -3,8 +3,12 @@ import { useUpdatePostMutation, useDeletePostMutation } from "./postsApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import useAuth from "../../hooks/useAuth";
 
 const EditPostForm = ({ post, users }) => {
+    const { isAdmin, username } = useAuth();
+    let isAuthor;
+    username === post.username ? isAuthor = true : isAuthor = false;
 
     const [updatePost, {
         isLoading,
@@ -67,29 +71,41 @@ const EditPostForm = ({ post, users }) => {
 
     const errContent = (error?.data?.message || delerror?.data?.message) ?? '';
 
+    let deleteButton = null;
+    let saveButton = null;
+    if (isAdmin || isAuthor) {
+        deleteButton = (
+            <button
+                className="icon-button"
+                title="Delete"
+                onClick={onDeletePostClicked}
+            >
+                <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+        );
+        saveButton = (
+            <button
+                className="icon-button"
+                title="Save"
+                onClick={onSavePostClicked}
+                disabled={!canSave}
+            >
+                <FontAwesomeIcon icon={faSave} />
+            </button>
+        );
+    };
+
+
     const content = (
         <>
             <p className={errClass}>{errContent}</p>
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
-                    <h2>Modifier Post #{post.id}</h2>
+                    <h2>Modifier Post <br />#{post.id}</h2>
                     <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSavePostClicked}
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                        <button
-                            className="icon-button"
-                            title="Delete"
-                            onClick={onDeletePostClicked}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan} />
-                        </button>
+                        {saveButton}
+                        {deleteButton}
                     </div>
                 </div>
 

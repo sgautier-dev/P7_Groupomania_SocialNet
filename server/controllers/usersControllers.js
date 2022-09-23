@@ -31,10 +31,14 @@ const createUser = asyncHandler(async (req, res) => {
     }
 
     //Check for duplicates, exec() is recommended to be used with promise query by mongoose doc
-    const duplicate = await User.findOne({ email }).lean().exec();
+    const duplicateEmail = await User.findOne({ email }).lean().exec();
+    const duplicateUsername = await User.findOne({ username }).lean().exec();
 
-    if (duplicate) {
-        return res.status(409).json({ message: 'Duplicate email' });
+    if (duplicateEmail) {
+        return res.status(409).json({ message: 'Cet email existe déjà' });
+    };
+    if (duplicateUsername) {
+        return res.status(409).json({ message: 'Ce nom existe déjà' });
     };
 
     //Hashing password

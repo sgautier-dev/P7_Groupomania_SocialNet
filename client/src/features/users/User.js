@@ -16,10 +16,10 @@ const User = ({ userId }) => {
         const cellStatus = user.active ? '' : 'table__cell--inactive';
 
         return (
-            <tr className="table__row user">
-                <td className={`table__cell ${cellStatus}`}>{user.username}</td>
-                <td className={`table__cell ${cellStatus}`}>{user.adminRole ? 'Admin' : 'Employé'}</td>
-                <td className={`table__cell ${cellStatus}`}>
+            <tr className="table__row">
+                <td className={`table__cell ${cellStatus} user__username`}>{user.username}</td>
+                <td className={`table__cell ${cellStatus} user__roles`}>{user.adminRole ? 'Admin' : 'Employé'}</td>
+                <td className={`table__cell ${cellStatus} user__edit`}>
                     <button
                         className="icon-button table__button"
                         onClick={handleEdit}

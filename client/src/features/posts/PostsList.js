@@ -25,15 +25,12 @@ if (isError) {
 if (isSuccess) {
     const { ids } = posts;
 
-    const tableContent = ids?.length
-        ? ids.map(postId => <Post key={postId} postId={postId} />)
-        : null;
+    const tableContent = ids?.length && ids.map(postId => <Post key={postId} postId={postId} />);
 
     content = (
         <table className="table table--posts">
             <thead className="table__thead">
                 <tr>
-                    <th scope="col" className="table__th"></th>
                     <th scope="col" className="table__th post__created">Date de création</th>
                     <th scope="col" className="table__th post__updated">Date de modification</th>
                     <th scope="col" className="table__th post__title">Texte</th>

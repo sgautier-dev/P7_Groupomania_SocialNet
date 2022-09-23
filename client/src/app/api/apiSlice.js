@@ -39,7 +39,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         } else {
 
             if (refreshResult?.error?.status === 403) {
-                refreshResult.error.data.message = "Votre sessions a expirée. "
+                refreshResult.error.data.message = "Votre sessions a expirée."
             }
             return refreshResult
         }

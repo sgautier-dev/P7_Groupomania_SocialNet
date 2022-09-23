@@ -20,7 +20,6 @@ const Post = ({ postId }) => {
 
         return (
             <tr className="table__row">
-                <td className="table__cell"></td>
                 <td className="table__cell post__created">{created}</td>
                 <td className="table__cell post__updated">{updated}</td>
                 <td className="table__cell post__title">{post.text}</td>
