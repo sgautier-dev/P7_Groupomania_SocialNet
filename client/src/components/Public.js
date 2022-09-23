@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Public = () => {
@@ -8,14 +7,20 @@ const Public = () => {
                 <h1>Bienvenue sur <span className="nowrap">GroupoNet!</span></h1>
             </header>
             <main className="public__main">
-                <Link to="/login">Connection</Link>
+                <div className="public__container">
+                    <Link to="/login">
+                        <button className="public__button">Se connecter</button>
+                    </Link>
+                    <br />
+                    <Link className="public__link" to="/signup">ou s'inscrire</Link>
+                </div>
             </main>
             <footer>
                 <p>Le réseau social d'entreprise de Groupomania.</p>
             </footer>
         </section>
 
-    )
-    return content
+    );
+    return content;
 };
 export default Public;

@@ -13,6 +13,7 @@ import NewPost from './features/posts/NewPost';
 import Prefetch from './features/auth/Prefetch';
 import PersistLogin from './features/auth/PersistLogin';
 import RequireAuth from './features/auth/requireAuth';
+import Signup from './components/Signup';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         {/* Public Routes */}
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
 
         {/* Protected Routes */}
         <Route element={<PersistLogin />}>

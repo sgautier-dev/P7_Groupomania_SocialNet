@@ -16,7 +16,7 @@ const useAuth = () => {
             status = "Admin";
         }
 
-        return { username, adminRole, status, isAdmin };
+        return { username, isAdmin, status };
     }
 
     return { username: '', isAdmin, status };

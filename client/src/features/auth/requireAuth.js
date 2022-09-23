@@ -3,10 +3,10 @@ import useAuth from "../../hooks/useAuth";
 
 const RequireAuth = () => {
     const location = useLocation();
-    const { adminRole } = useAuth();
+    const { isAdmin } = useAuth();
 
     const content = (
-        adminRole ? <Outlet />
+        isAdmin ? <Outlet />
         : <Navigate to="/login" state={{ from: location }} replace /> //if not allowed bring back to login, "replace" removes requireAuth from browser history 
     );
 

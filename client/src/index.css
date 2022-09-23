@@ -83,6 +83,10 @@ select {
   font: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
 #root {
   /* React root div */
   min-height: 100vh;
@@ -116,6 +120,21 @@ a:focus-visible {
 .public {
   padding: 1em;
   flex-grow: 1;
+}
+
+.public__container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.public__button {
+  padding: 0.5em;
+  border-radius: 15px;
+}
+
+.public__link {
+  padding: 0.5em;
+  text-decoration: underline;
 }
 
 .public__main,
@@ -160,7 +179,7 @@ a:focus-visible {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  gap: 0.5em;
+  gap: 1.5em;
 }
 
 .dash-container {
