@@ -4,7 +4,9 @@ import {
 } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 
-const postsAdapter = createEntityAdapter({});
+const postsAdapter = createEntityAdapter({
+    sortComparer: (a, b) => b.updatedAt.localeCompare(a.updatedAt)
+});//sorting from more recent to oldest
 
 const initialState = postsAdapter.getInitialState();
 
@@ -24,8 +26,9 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 });
                 return postsAdapter.setAll(initialState, loadedPosts)
             },
-            //safe guard if query returns no ids
+            
             providesTags: (result, error, arg) => {
+                //safe guard if query returns no ids
                 if (result?.ids) {
                     return [
                         { type: 'Post', id: 'LIST' },

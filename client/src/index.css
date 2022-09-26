@@ -291,6 +291,23 @@ tr {
 	background-color: var(--INACTIVE);
 }
 
+/* ||  POST LIST */
+article {
+  margin: 0.5em;
+  border: 2px solid var(--BORDER-COLOR);
+  border-radius: 10px;
+  padding: 1em;
+}
+
+.excerpt {
+  font-style: italic;
+}
+
+.postCredit {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
 /* ||  POST */
 
 .post__created,

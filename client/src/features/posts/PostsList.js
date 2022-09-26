@@ -25,27 +25,17 @@ if (isError) {
 if (isSuccess) {
     const { ids } = posts;
 
-    const tableContent = ids?.length && ids.map(postId => <Post key={postId} postId={postId} />);
+    const listContent = ids?.length && ids.map(postId => <Post key={postId} postId={postId} />);
 
-    content = (
-        <table className="table table--posts">
-            <thead className="table__thead">
-                <tr>
-                    <th scope="col" className="table__th post__created">Date de création</th>
-                    <th scope="col" className="table__th post__updated">Date de modification</th>
-                    <th scope="col" className="table__th post__title">Texte</th>
-                    <th scope="col" className="table__th post__username">Créé par</th>
-                    <th scope="col" className="table__th post__edit">Editer</th>
-                </tr>
-            </thead>
-            <tbody>
-                {tableContent}
-            </tbody>
-        </table>
+    return (
+        <section>
+                {listContent}
+        </section>
     );
 };
 
-return content
+return content;
+
 };
 
 export default PostsList;

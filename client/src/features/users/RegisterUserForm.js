@@ -77,7 +77,7 @@ const RegisterUserForm = () => {
             {isSuccess ? (
                 <section>
                     <h1>Inscription réussie!</h1>
-                    <p>
+                    <p className="line public__link">
                         <Link to="/login">S'identifier</Link>
                     </p>
                 </section>
