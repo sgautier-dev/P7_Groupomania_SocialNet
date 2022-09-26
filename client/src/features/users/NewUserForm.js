@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
-const USER_REGEX = /^[a-zA-Zàâéèëêïîôùüç'\s-]{3,20}$/;
+const USER_REGEX = /^[A-z][A-Za-zÀ-Ÿà-ÿ-0-9-._\s]{3,23}$/;
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
 
@@ -42,13 +41,12 @@ const NewUserForm = () => {
     setValidPassword(PWD_REGEX.test(password))
   }, [password]);
 
-  //emptying after successful creation
+  //emptying and navigating after successful creation
   useEffect(() => {
     if (isSuccess) {
       setUsername('')
       setEmail('')
       setPassword('')
-      //setAdminRole(false)
       navigate('/dash/users')
     }
   }, [isSuccess, navigate]);

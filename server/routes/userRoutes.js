@@ -3,6 +3,8 @@ const router = express.Router();
 const  usersControllers = require('../controllers/usersControllers');
 const verifyJWT = require('../middleware/verifyJWT');
 
+router.route('/').post(usersControllers.registerUser);
+
 router.use(verifyJWT);//applying to all user routes 
 
 router.route('/')

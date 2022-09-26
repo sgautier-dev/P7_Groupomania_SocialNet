@@ -104,7 +104,13 @@ const Login = () => {
             />
             Faire confiance à cet appareil
           </label>
-        </form>
+        </form><br/>
+        <p>
+                        Pas encore inscrit?<br />
+                        <span className="line public__link">
+                            <Link to="/signup">S'inscrire</Link>
+                        </span>
+                    </p>
       </main>
       <footer>
         <Link to="/">Retour à l'accueil</Link>

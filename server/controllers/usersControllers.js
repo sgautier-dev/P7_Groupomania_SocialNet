@@ -4,6 +4,46 @@ const asyncHandler = require('express-async-handler');// so we don't need to use
 const bcrypt = require('bcrypt');
 
 /**
+* @desc Create user on signup page
+* @route POST /users
+* @access Public
+*/
+const registerUser = asyncHandler(async (req, res) => {
+
+    const { username, email, password, adminRole } = req.body;
+    //confirm data
+    if (!username || !password || !email) {
+        return res.status(400).json({ message: 'Toutes les données utilisateur valides sont requises' });
+    }
+
+    //Check for duplicates, exec() is recommended to be used with promise query by mongoose doc
+    const duplicateEmail = await User.findOne({ email }).lean().exec();
+    const duplicateUsername = await User.findOne({ username }).lean().exec();
+
+    if (duplicateEmail) {
+        return res.status(409).json({ message: 'Cet email existe déjà' });
+    };
+    if (duplicateUsername) {
+        return res.status(409).json({ message: 'Ce nom existe déjà' });
+    };
+
+    //Hashing password
+    const hashedPwd = await bcrypt.hash(password, 10); // with salt rounds
+
+    const userObject = { username, email, "password": hashedPwd, adminRole };
+
+    //Create and store new user
+    const user = await User.create(userObject);
+
+    if (user) { //created
+        res.status(201).json({ message: `New user ${username} created` });
+    } else {
+        res.status(400).json({ message: `Invalid user data received` });
+    };
+
+});
+
+/**
 * @desc Get all users
 * @route GET /users
 * @access Private
@@ -18,7 +58,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 /**
-* @desc Create user
+* @desc Create user by admin
 * @route POST /users
 * @access Private
 */
@@ -131,6 +171,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+    registerUser,
     getAllUsers,
     createUser,
     updateUser,
