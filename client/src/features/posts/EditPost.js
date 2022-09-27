@@ -10,7 +10,7 @@ const EditPost = () => {
     const post = useSelector(state => selectPostById(state, id));
     const users = useSelector(selectAllUsers);
 
-    const content = post && users ? <EditPostForm post={post} users={users} /> : <p>Loading...</p>;
+    const content = post && users ? <EditPostForm post={post} users={users} /> : <p>En cours de chargement...</p>;
 
     return content;
 }

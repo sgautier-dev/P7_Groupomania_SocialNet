@@ -8,7 +8,7 @@ import useAuth from "../../hooks/useAuth";
 const EditPostForm = ({ post, users }) => {
     const { isAdmin, username } = useAuth();
     let isAuthor;
-    username === post.username ? isAuthor = true : isAuthor = false;
+    username === post?.username ? isAuthor = true : isAuthor = false;
 
     const [updatePost, {
         isLoading,
@@ -27,6 +27,7 @@ const EditPostForm = ({ post, users }) => {
 
     const [text, setText] = useState(post.text);
     const [userId, setUserId] = useState(post.user);
+    const [file, setFile] = useState(null);
 
     useEffect(() => {
 
@@ -40,17 +41,26 @@ const EditPostForm = ({ post, users }) => {
 
     const onTextChanged = e => setText(e.target.value);
     const onUserIdChanged = e => setUserId(e.target.value);
+    const onFileChanged = e => setFile(e.target.files[0]);
 
     const canSave = [text, userId].every(Boolean) && !isLoading
 
     const onSavePostClicked = async (e) => {
+        //id: post.id, user: userId, text
+        const data = new FormData();
+        console.log(file);
+        data.append('id', post.id);
+        data.append('user', userId);
+        data.append('text', text);
+        data.append('image', file);
+
         if (canSave) {
-            await updatePost({ id: post.id, user: userId, text })
+            await updatePost(data)
         }
     }
 
     const onDeletePostClicked = async () => {
-        await deletePost({ id: post.id })
+        await deletePost({ id: post.id, imageUrl: post.imageUrl })
     }
 
     const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
@@ -61,7 +71,6 @@ const EditPostForm = ({ post, users }) => {
             <option
                 key={user.id}
                 value={user.id}
-
             > {user.username}</option >
         )
     });
@@ -95,6 +104,22 @@ const EditPostForm = ({ post, users }) => {
         );
     };
 
+    let ownerSelect = (<div className="form__divider"><label className="form__label">
+        AUTEUR:</label><p>{username}</p></div>);
+    if (isAdmin) {
+        ownerSelect = (<div className="form__divider"><label className="form__label form__checkbox-container" htmlFor="username">
+            AUTEUR:</label>
+            <select
+                id="username"
+                name="username"
+                className="form__select"
+                value={userId}
+                onChange={onUserIdChanged}
+            >
+                {options}
+            </select></div>)
+    };
+
 
     const content = (
         <>
@@ -102,7 +127,7 @@ const EditPostForm = ({ post, users }) => {
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
-                    <h2>Modifier Post <br />#{post.id}</h2>
+                    <h2>Modifier Post</h2>
                     <div className="form__action-buttons">
                         {saveButton}
                         {deleteButton}
@@ -110,7 +135,7 @@ const EditPostForm = ({ post, users }) => {
                 </div>
 
                 <label className="form__label" htmlFor="post-text">
-                    Text:</label>
+                    TEXTE:</label>
                 <textarea
                     className={`form__input form__input--text ${validTextClass}`}
                     id="post-text"
@@ -118,20 +143,18 @@ const EditPostForm = ({ post, users }) => {
                     value={text}
                     onChange={onTextChanged}
                 />
+                <label className="form__label" htmlFor="image">
+                    IMAGE:</label>
+                <input
+                    className="form__input"
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    onChange={onFileChanged}
+                />
                 <div className="form__row">
-                    <div className="form__divider">
-                        <label className="form__label form__checkbox-container" htmlFor="post-username">
-                            AUTEUR:</label>
-                        <select
-                            id="post-username"
-                            name="username"
-                            className="form__select"
-                            value={userId}
-                            onChange={onUserIdChanged}
-                        >
-                            {options}
-                        </select>
-                    </div>
+                    {ownerSelect}
                     <div className="form__divider">
                         <p className="form__created">Created:<br />{created}</p>
                         <p className="form__updated">Updated:<br />{updated}</p>

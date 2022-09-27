@@ -30,6 +30,7 @@ app.use('/auth', require('./routes/authRoutes'));
 app.use('/users', require('./routes/userRoutes'));
 app.use('/posts', require('./routes/postRoutes'));
 
+
 // setting routes to 404 if no other route is matching
 app.all('*', (req, res) => {
     res.status(404);

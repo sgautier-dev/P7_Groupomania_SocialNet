@@ -9,7 +9,7 @@ const MIME_TYPES = {
 //storing image on disk
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, 'images');
+    callback(null, 'public/images');
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(' ').join('_');//replacing white spaces with underscores

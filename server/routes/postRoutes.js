@@ -8,8 +8,8 @@ router.use(verifyJWT);//applying to all post routes
 
 router.route('/')
     .get(postsControllers.getAllPosts)
-    .post(multer,postsControllers.createNewPost)
-    .patch(postsControllers.updatePost)
+    .post(multer, postsControllers.createNewPost)
+    .patch(multer, postsControllers.updatePost)
     .delete(postsControllers.deletePost);
 
 module.exports = router;

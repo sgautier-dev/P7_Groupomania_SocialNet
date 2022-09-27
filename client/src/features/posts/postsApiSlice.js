@@ -39,34 +39,30 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         }),
 
         addNewPost: builder.mutation({
-            query: initialPost => ({
+            query: data => ({
                 url: '/posts',
                 method: 'POST',
-                body: {
-                    ...initialPost,
-                }
+                body: data
             }),
             invalidatesTags: [
                 { type: 'Post', id: "LIST" }
             ]
         }),
         updatePost: builder.mutation({
-            query: initialPost => ({
+            query: data => ({
                 url: '/posts',
                 method: 'PATCH',
-                body: {
-                    ...initialPost,
-                }
+                body: data
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: 'Post', id: arg.id }
             ]
         }),
         deletePost: builder.mutation({
-            query: ({ id }) => ({
+            query: ({ id, imageUrl }) => ({
                 url: `/posts`,
                 method: 'DELETE',
-                body: { id }
+                body: { id, imageUrl }
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: 'Post', id: arg.id }

@@ -2,6 +2,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
+const fs = require('fs');//access to file system
 
 /**
 * @desc Get all posts with user
@@ -32,17 +33,17 @@ const getAllPosts = asyncHandler(async (req, res) => {
 * @access Private
 */
 const createNewPost = asyncHandler(async (req, res) => {
+    // console.log(req.body);
+    // console.log(req.file);
+ 
     const { user, text } = req.body;
-    let imageUrl = '';
+    const imageUrl = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';// if image attached
+    
 
     // Confirm data
     if (!user || !text) {
         return res.status(400).json({ message: 'All valid post data required' });
     }
-    // if image attached
-    if (req.file) {
-        imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-    };
 
     // Create and store the new post 
     const post = await Post.create({ user, text, imageUrl });
@@ -63,6 +64,9 @@ const createNewPost = asyncHandler(async (req, res) => {
 const updatePost = asyncHandler(async (req, res) => {
     const { id, user, text } = req.body;
 
+    // console.log(req.body);
+    // console.log(req.file);
+
     // Confirm data
     if (!id || !user || !text) {
         return res.status(400).json({ message: 'All valid post data required' });
@@ -80,7 +84,7 @@ const updatePost = asyncHandler(async (req, res) => {
         const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         const filename = post.imageUrl.split('/images/')[1];
         if (filename) {
-            fs.unlink(`images/${filename}`, (err) => {
+            fs.unlink(`public/images/${filename}`, (err) => {
                 if (err) {
                     console.log(err);
                 }
@@ -121,7 +125,7 @@ const deletePost = asyncHandler(async (req, res) => {
     if (imageUrl) {
         const filename = imageUrl.split('/images/')[1];
         if (filename) {
-            fs.unlink(`images/${filename}`, (err) => {
+            fs.unlink(`public/images/${filename}`, (err) => {
                 if (err) {
                     console.log(err);
                 }
