@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faThumbsUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useDeletePostMutation } from "./postsApiSlice";
 import { useNavigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { selectPostById } from './postsApiSlice';
 import useAuth from "../../hooks/useAuth";
+
+import LikeButton from "./LikeButton";
 
 const Post = ({ postId }) => {
 
@@ -22,16 +24,19 @@ const Post = ({ postId }) => {
         error: delerror
     }] = useDeletePostMutation();
 
+
     if (post) {
         // const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' })
-        const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' })
+        const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' });
 
         const handleEdit = () => navigate(`/dash/posts/${postId}`);
-        const handleLike = () => console.log('one like click');
+        //const handleLike = () => setLike(prev => !prev);
+
+
         const onDeletePostClicked = async () => {
             console.log(post.imageUrl)
-            await deletePost({ id: post.id, imageUrl: post.imageUrl })
-        }
+            await deletePost({ id: post.id, imageUrl: post.imageUrl });
+        };
 
         let deleteButton = null;
         let modifyButton = null;
@@ -56,7 +61,7 @@ const Post = ({ postId }) => {
             alt='post'></img>) : null;
 
         const errClass = (isDelError) ? "errmsg" : "offscreen";
-        const errContent = delerror?.data?.message ?? '';
+        const errContent = ( delerror?.data?.message) ?? '';
 
         return (
             <article>
@@ -66,15 +71,9 @@ const Post = ({ postId }) => {
                 <p className="postCredit">
                     {post.username} le {updated}
                 </p>
-               
-                <div className="list__buttons">
-                    <button
-                        className="icon-button"
-                        onClick={handleLike}
-                    >
-                        <FontAwesomeIcon icon={faThumbsUp} />
-                    </button>
 
+                <div className="list__buttons">         
+                    <LikeButton post={post} />
                     {modifyButton}
                     {deleteButton}
                 </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../img/icon-left-font.svg';
 
 const Public = () => {
     const content = (
@@ -7,12 +8,14 @@ const Public = () => {
                 <h1>Bienvenue sur <span className="nowrap">GroupoNet!</span></h1>
             </header>
             <main className="public__main">
-                <div className="public__container">
+                <div className="public-logo__container">
                     <Link to="/login">
-                        <button className="public__button">Se connecter</button>
+                        <img
+                            className="public__logo"
+                            src={logo}
+                            alt="groupomania logo"
+                        />
                     </Link>
-                    <br />
-                    <Link className="public__link" to="/signup">ou s'inscrire</Link>
                 </div>
             </main>
             <footer>

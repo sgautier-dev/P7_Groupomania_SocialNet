@@ -1,6 +1,6 @@
 
 import { useRef, useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { setCredentials } from './authSlice';
@@ -63,59 +63,47 @@ const Login = () => {
   if (isLoading) return <p>En cours de chargement...</p>
 
   const content = (
-    <section className="public">
-      <header>
+
+    <>
+      <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+
+      <form className="form" onSubmit={handleSubmit}>
         <h1>Login Employé</h1>
-      </header>
-      <main className="login">
-        <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+        <label htmlFor="email">Email:</label>
+        <input
+          className="form__input"
+          type="text"
+          id="email"
+          ref={userRef}
+          value={email}
+          onChange={handleUserInput}
+          autoComplete="off"
+          required
+        />
 
-        <form className="form" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
+        <label htmlFor="password">Mot de passe:</label>
+        <input
+          className="form__input"
+          type="password"
+          id="password"
+          onChange={handlePwdInput}
+          value={password}
+          required
+        />
+        <button className="form__submit-button">Valider</button>
+
+        <label htmlFor="persist" className="form__persist">
           <input
-            className="form__input"
-            type="text"
-            id="email"
-            ref={userRef}
-            value={email}
-            onChange={handleUserInput}
-            autoComplete="off"
-            required
+            type="checkbox"
+            className="form__checkbox"
+            id="persist"
+            onChange={handleToggle}
+            checked={persist}
           />
-
-          <label htmlFor="password">Mot de passe:</label>
-          <input
-            className="form__input"
-            type="password"
-            id="password"
-            onChange={handlePwdInput}
-            value={password}
-            required
-          />
-          <button className="form__submit-button">Valider</button>
-
-          <label htmlFor="persist" className="form__persist">
-            <input
-              type="checkbox"
-              className="form__checkbox"
-              id="persist"
-              onChange={handleToggle}
-              checked={persist}
-            />
-            Faire confiance à cet appareil
-          </label>
-        </form><br/>
-        <p>
-                        Pas encore inscrit?<br />
-                        <span className="line public__link">
-                            <Link to="/signup">S'inscrire</Link>
-                        </span>
-                    </p>
-      </main>
-      <footer>
-        <Link to="/">Retour à l'accueil</Link>
-      </footer>
-    </section>
+          Faire confiance à cet appareil
+        </label>
+      </form>
+    </>
   )
 
   return content

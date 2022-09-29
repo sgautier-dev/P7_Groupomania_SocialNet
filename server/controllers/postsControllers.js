@@ -38,7 +38,7 @@ const createNewPost = asyncHandler(async (req, res) => {
  
     const { user, text } = req.body;
     const imageUrl = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';// if image attached
-    
+    const likes = [];
 
     // Confirm data
     if (!user || !text) {
@@ -46,7 +46,7 @@ const createNewPost = asyncHandler(async (req, res) => {
     }
 
     // Create and store the new post 
-    const post = await Post.create({ user, text, imageUrl });
+    const post = await Post.create({ user, text, imageUrl, likes });
 
     if (post) { // Created 
         return res.status(201).json({ message: 'New post created' });
@@ -62,9 +62,9 @@ const createNewPost = asyncHandler(async (req, res) => {
 * @access Private
 */
 const updatePost = asyncHandler(async (req, res) => {
-    const { id, user, text } = req.body;
+    const { id, user, text, likes } = req.body;
 
-    // console.log(req.body);
+    console.log(req.body);
     // console.log(req.file);
 
     // Confirm data
@@ -95,6 +95,7 @@ const updatePost = asyncHandler(async (req, res) => {
 
     post.user = user;
     post.text = text;
+    if (likes) post.likes = likes;
 
     const updatedPost = await post.save();
 

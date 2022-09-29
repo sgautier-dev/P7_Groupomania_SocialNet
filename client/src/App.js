@@ -14,6 +14,7 @@ import Prefetch from './features/auth/Prefetch';
 import PersistLogin from './features/auth/PersistLogin';
 import RequireAuth from './features/auth/requireAuth';
 import Signup from './components/Signup';
+import PublicLayout from './components/PublicLayout';
 
 function App() {
   return (
@@ -21,8 +22,10 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* Public Routes */}
         <Route index element={<Public />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
+        <Route element={<PublicLayout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
 
         {/* Protected Routes */}
         <Route element={<PersistLogin />}>

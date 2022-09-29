@@ -43,7 +43,7 @@ const EditPostForm = ({ post, users }) => {
     const onUserIdChanged = e => setUserId(e.target.value);
     const onFileChanged = e => setFile(e.target.files[0]);
 
-    const canSave = [text, userId].every(Boolean) && !isLoading
+    const canSave = [text, userId, post.id].every(Boolean) && !isLoading
 
     const onSavePostClicked = async (e) => {
         //id: post.id, user: userId, text

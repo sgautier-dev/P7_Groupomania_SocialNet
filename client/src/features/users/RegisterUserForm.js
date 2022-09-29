@@ -75,16 +75,17 @@ const RegisterUserForm = () => {
     return (
         <>
             {isSuccess ? (
-                <section>
+                <>
                     <h1>Inscription réussie!</h1>
                     <p className="line public__link">
                         <Link to="/login">S'identifier</Link>
                     </p>
-                </section>
+                </>
             ) : (
-                <section>
+                <>
                     <p ref={errRef} className={isError ? "errmsg" : "offscreen"} aria-live="assertive">{error?.data?.message}</p>
                     <form className="form" onSubmit={handleSubmit}>
+                    <h1>Inscription Employé</h1>
                         <label htmlFor="username">
                             Nom d'utilisateur:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
@@ -184,13 +185,7 @@ const RegisterUserForm = () => {
                         <button className="form__submit-button"
                         disabled={!validName || !validPwd || !validMatch ? true : false}>S'inscrire</button><br/>
                     </form>
-                    <p>
-                        Déjà inscrit?<br />
-                        <span className="line public__link">
-                            <Link to="/login">S'identifier</Link>
-                        </span>
-                    </p>
-                </section>
+                </>
             )}
         </>
     )

@@ -13,6 +13,8 @@ import { useSendLogoutMutation } from '../features/auth/authApiSlice';
 
 import useAuth from '../hooks/useAuth';
 
+import logo from '../img/icon-left-font-monochrome-white.svg';
+
 const DASH_REGEX = /^\/dash(\/)?$/;
 const POSTS_REGEX = /^\/dash\/posts(\/)?$/;
 const USERS_REGEX = /^\/dash\/users(\/)?$/;
@@ -135,7 +137,12 @@ const DashHeader = () => {
             <header className="dash-header">
                 <div className={`dash-header__container ${dashClass}`}>
                     <Link to="/dash">
-                        <h1 className="dash-header__title">GroupoNet</h1>
+
+                        <img
+                            className="logo"
+                            src={logo}
+                            alt="groupomania logo"
+                        />
                     </Link>
                     <nav className="dash-header__nav">
                         {buttonContent}

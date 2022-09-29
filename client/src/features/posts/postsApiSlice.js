@@ -26,7 +26,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 });
                 return postsAdapter.setAll(initialState, loadedPosts)
             },
-            
+
             providesTags: (result, error, arg) => {
                 //safe guard if query returns no ids
                 if (result?.ids) {
@@ -68,6 +68,30 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 { type: 'Post', id: arg.id }
             ]
         }),
+        addLike: builder.mutation({
+            query: initialPost => ({
+                url: '/posts',
+                method: 'PATCH',
+                body: {...initialPost}
+            }),
+            //optimistic update for likes
+            async onQueryStarted({ id, likes }, { dispatch, queryFulfilled }) {
+                // `updateQueryData` requires the endpoint name and cache key arguments,
+                // so it knows which piece of cache state to update
+                const patchResult = dispatch(
+                    postsApiSlice.util.updateQueryData('getPosts', undefined, draft => {
+                        // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
+                        const post = draft.entities[id]
+                        if (post) post.likes = likes
+                    })
+                )
+                try {
+                    await queryFulfilled
+                } catch {
+                    patchResult.undo()
+                }
+            }
+        })
     }),
 });
 
@@ -76,6 +100,7 @@ export const {
     useAddNewPostMutation,
     useUpdatePostMutation,
     useDeletePostMutation,
+    useAddLikeMutation,
 } = postsApiSlice;
 
 // returns the query result object
