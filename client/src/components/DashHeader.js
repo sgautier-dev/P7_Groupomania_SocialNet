@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faFileCirclePlus,
     faFilePen,
     faUserGear,
     faUserPlus,
-    faRightFromBracket
+    faRightFromBracket,
+    faRectangleList
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const USERS_REGEX = /^\/dash\/users(\/)?$/;
 
 const DashHeader = () => {
 
-    const { isAdmin } = useAuth();
+    const { isAdmin, userId } = useAuth();
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -41,6 +41,7 @@ const DashHeader = () => {
     const onNewUserClicked = () => navigate('/dash/users/new');
     const onPostsClicked = () => navigate('/dash/posts');
     const onUsersClicked = () => navigate('/dash/users');
+    const onUserClicked = () => navigate(`/dash/users/${userId}`);
 
 
     //showing dash class if we are on dash posts or users path
@@ -57,7 +58,7 @@ const DashHeader = () => {
                 title="New Post"
                 onClick={onNewPostClicked}
             >
-                <FontAwesomeIcon icon={faFileCirclePlus} />
+                <FontAwesomeIcon icon={faFilePen} />
             </button>
         )
     }
@@ -88,6 +89,19 @@ const DashHeader = () => {
                 </button>
             )
         }
+    } else {
+        console.log(pathname)
+        if (!pathname.includes('/users')) {
+            userButton = (
+                <button
+                    className="icon-button"
+                    title="Users"
+                    onClick={onUserClicked}
+                >
+                    <FontAwesomeIcon icon={faUserGear} />
+                </button>
+            )
+        }
     }
 
     let postsButton = null
@@ -98,7 +112,7 @@ const DashHeader = () => {
                 title="Posts"
                 onClick={onPostsClicked}
             >
-                <FontAwesomeIcon icon={faFilePen} />
+                <FontAwesomeIcon icon={faRectangleList} />
             </button>
         )
     }

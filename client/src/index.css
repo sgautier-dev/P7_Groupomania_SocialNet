@@ -323,7 +323,6 @@ article {
 }
 
 .excerpt {
-	font-style: italic;
 	margin-bottom: 20px;
 }
 
@@ -370,6 +369,12 @@ img {
 
 .post__status {
 	font-weight: bold;
+}
+
+.post__readmore {
+	font-weight: bold;
+	cursor: pointer;
+	color: var(--LINK-HOVER);
 }
 
 /* ||  USER */

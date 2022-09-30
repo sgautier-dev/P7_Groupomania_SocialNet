@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,6 +25,7 @@ const EditUserForm = ({ user }) => {
     }] = useDeleteUserMutation();
 
     const navigate = useNavigate();
+    const { isAdmin } = useAuth();
 
     const [username, setUsername] = useState(user.username);
     const [validUsername, setValidUsername] = useState(false);
@@ -51,10 +53,13 @@ const EditUserForm = ({ user }) => {
             setUsername('')
             setEmail('')
             setPassword('')
-            navigate('/dash/users')
+            if (isAdmin) {
+                navigate('/dash/users')
+            } else navigate('/dash')
+            
         };
 
-    }, [isSuccess, isDelSuccess, navigate]);
+    }, [isSuccess, isDelSuccess, navigate, isAdmin]);
 
     const onUsernameChanged = e => setUsername(e.target.value);
     const onEmailChanged = e => setEmail(e.target.value);

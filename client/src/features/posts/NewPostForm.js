@@ -16,14 +16,10 @@ const NewPostForm = ({ users }) => {
 
     const navigate = useNavigate();
 
-    const { isAdmin, username } = useAuth();
-
-    const currentUser = users.filter(user => {
-        return username === user.username
-    });
+    const { isAdmin, username, userId } = useAuth();
 
     const [text, setText] = useState('');
-    const [userId, setUserId] = useState(currentUser[0].id);
+    const [userID, setUserId] = useState(userId);
     const [file, setFile] = useState(null);
 
     useEffect(() => {
@@ -38,14 +34,14 @@ const NewPostForm = ({ users }) => {
     const onUserIdChanged = e => setUserId(e.target.value);
     const onFileChanged = e => setFile(e.target.files[0]);
 
-    const canSave = [text, userId].every(Boolean) && !isLoading;
+    const canSave = [text, userID].every(Boolean) && !isLoading;
 
     const onSavePostClicked = async (e) => {
         e.preventDefault()
 
         const data = new FormData();
         console.log(file);
-        data.append('user', userId);
+        data.append('user', userID);
         data.append('text', text);
         data.append('image', file);
 
@@ -72,7 +68,7 @@ const NewPostForm = ({ users }) => {
                 id="username"
                 name="username"
                 className="form__select"
-                value={userId}
+                value={userID}
                 onChange={onUserIdChanged}
             >
                 {options}

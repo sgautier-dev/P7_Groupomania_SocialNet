@@ -8,6 +8,8 @@ import { selectPostById } from './postsApiSlice';
 import useAuth from "../../hooks/useAuth";
 
 import LikeButton from "./LikeButton";
+import TimeAgo from './TimeAgo';
+import ReadMore from './ReadMore';
 
 const Post = ({ postId }) => {
 
@@ -27,11 +29,10 @@ const Post = ({ postId }) => {
 
     if (post) {
         // const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' })
-        const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' });
+        //const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' });
 
         const handleEdit = () => navigate(`/dash/posts/${postId}`);
         //const handleLike = () => setLike(prev => !prev);
-
 
         const onDeletePostClicked = async () => {
             console.log(post.imageUrl)
@@ -61,18 +62,18 @@ const Post = ({ postId }) => {
             alt='post'></img>) : null;
 
         const errClass = (isDelError) ? "errmsg" : "offscreen";
-        const errContent = ( delerror?.data?.message) ?? '';
+        const errContent = (delerror?.data?.message) ?? '';
 
         return (
             <article>
                 <p className={errClass}>{errContent}</p>
-                <p className="excerpt">{post.text}</p>
+                <ReadMore text={post.text} />
                 {image}
                 <p className="postCredit">
-                    {post.username} le {updated}
+                    {post.username} <TimeAgo timestamp={post.updatedAt} />
                 </p>
 
-                <div className="list__buttons">         
+                <div className="list__buttons">
                     <LikeButton post={post} />
                     {modifyButton}
                     {deleteButton}

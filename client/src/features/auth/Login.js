@@ -39,7 +39,7 @@ const Login = () => {
       dispatch(setCredentials({ accessToken }));
       setEmail('');
       setPassword('');
-      navigate('/dash');
+      navigate('/dash/posts');
     } catch (err) {
       if (!err.status) {
         setErrMsg('No Server Response');

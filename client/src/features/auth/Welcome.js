@@ -4,7 +4,7 @@ import useAuth from '../../hooks/useAuth';// for access control
 
 const Welcome = () => {
 
-    const { username, isAdmin } = useAuth();
+    const { username, isAdmin, userId } = useAuth();
 
     const date = new Date();
     const today = new Intl.DateTimeFormat('local', { dateStyle: 'full', timeStyle: 'long' }).format(date);
@@ -17,8 +17,8 @@ const Welcome = () => {
             <h1>Bienvenue {username}</h1>
 
             <p><Link to="/dash/posts">Voir les Posts</Link></p>
-
             <p><Link to="/dash/posts/new">Ajouter un Post</Link></p>
+            {!isAdmin && <p><Link to={`/dash/users/${userId}`}>Voir son compte Utilisateur</Link></p>}
 
             {isAdmin && <>
                 <p><Link to="/dash/users">Voir les Utilisateurs</Link></p>
