@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('express-async-errors');//handling async errors in order to avoir try/catch in async func
 const express = require('express');
 const app = express();
 const path = require('path');

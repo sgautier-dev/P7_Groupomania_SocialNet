@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
     const status = res.statusCode ? res.statusCode : 500; //if no status code set to server error
 
     res.status(status);
-    res.json({ message: err.message });
+    res.json({ message: err.message, isError: true });//isError set for RTK query handling those errors on the frontend
 };
 
 module.exports = errorHandler;

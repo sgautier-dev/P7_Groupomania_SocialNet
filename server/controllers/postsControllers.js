@@ -1,6 +1,5 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
-const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
 const fs = require('fs');//access to file system
 
@@ -9,13 +8,13 @@ const fs = require('fs');//access to file system
 * @route GET /posts
 * @access Private
 */
-const getAllPosts = asyncHandler(async (req, res) => {
+const getAllPosts = async (req, res) => {
     // Get all posts from MongoDB
     const posts = await Post.find().lean();
 
     // If no posts 
     if (!posts?.length) {
-        return res.status(400).json({ message: 'No posts found' });
+        return res.status(400).json({ message: 'Aucun post trouvé' });
     }
 
     // Add username to each post before sending the response 
@@ -25,14 +24,14 @@ const getAllPosts = asyncHandler(async (req, res) => {
     }))
 
     res.json(postsWithUser);
-})
+};
 
 /**
 * @desc Create new post
 * @route POST /posts
 * @access Private
 */
-const createNewPost = asyncHandler(async (req, res) => {
+const createNewPost = async (req, res) => {
     // console.log(req.body);
     // console.log(req.file);
  
@@ -42,41 +41,39 @@ const createNewPost = asyncHandler(async (req, res) => {
 
     // Confirm data
     if (!user || !text) {
-        return res.status(400).json({ message: 'All valid post data required' });
+        return res.status(400).json({ message: 'Toutes les données post valides sont requises' });
     }
 
     // Create and store the new post 
     const post = await Post.create({ user, text, imageUrl, likes });
 
     if (post) { // Created 
-        return res.status(201).json({ message: 'New post created' });
+        return res.status(201).json({ message: 'Nouveau post créé' });
     } else {
-        return res.status(400).json({ message: 'Invalid post data received' });
+        return res.status(400).json({ message: 'Données de post invalides reçues' });
     }
 
-})
+};
 
 /**
 * @desc Update a post
 * @route PATCH /posts
 * @access Private
 */
-const updatePost = asyncHandler(async (req, res) => {
+const updatePost = async (req, res) => {
     const { id, user, text, likes } = req.body;
-
-    console.log(req.body);
     // console.log(req.file);
 
     // Confirm data
     if (!id || !user || !text) {
-        return res.status(400).json({ message: 'All valid post data required' });
+        return res.status(400).json({ message: 'Toutes les données post valides sont requises' });
     }
 
     // Confirm post exists to update
     const post = await Post.findById(id).exec();
 
     if (!post) {
-        return res.status(400).json({ message: 'Post not found' });
+        return res.status(400).json({ message: 'Post non trouvé' });
     }
 
     // if image attached delete old image file from disk and replace imageUrl
@@ -99,27 +96,27 @@ const updatePost = asyncHandler(async (req, res) => {
 
     const updatedPost = await post.save();
 
-    res.json(`'Post ${updatedPost._id}' updated`);
-})
+    res.json(`'Post ${updatedPost._id}' mise à jour`);
+};
 
 /**
 * @desc Delete a post
 * @route DELETE /posts
 * @access Private
 */
-const deletePost = asyncHandler(async (req, res) => {
+const deletePost = async (req, res) => {
     const { id, imageUrl } = req.body
 
     // Confirm data, if id exists and is valid
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ message: 'Valid post ID required' });
+        return res.status(400).json({ message: 'ID de post valide requis' });
     }
 
     // Confirm post exists to delete 
     const post = await Post.findById(id).exec();
 
     if (!post) {
-        return res.status(400).json({ message: 'Post not found' });
+        return res.status(400).json({ message: 'Post non trouvé' });
     }
 
     // if image attached delete image file from disk
@@ -136,10 +133,10 @@ const deletePost = asyncHandler(async (req, res) => {
 
     const result = await post.deleteOne();
 
-    const reply = `Post with ID ${result._id} deleted`;
+    const reply = `Post avec ID ${result._id} supprimé`;
 
     res.json(reply);
-})
+};
 
 module.exports = {
     getAllPosts,
