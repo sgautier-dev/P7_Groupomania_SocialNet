@@ -8,11 +8,13 @@ const initialState = usersAdapter.getInitialState();
 export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
-            query: () => '/users',
-            //because isError may be true even if status is 200, from redux doc
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError
-            },
+            query: () => ({
+                url: '/users',
+                //because isError may be true even if status is 200, from redux doc
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                },
+            }),
             //mapping _id to id
             transformResponse: responseData => {
                 const loadedUsers = responseData.map(user => {

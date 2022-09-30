@@ -7,6 +7,7 @@ import {
     faRightFromBracket,
     faRectangleList
 } from "@fortawesome/free-solid-svg-icons";
+import PuffLoader from 'react-spinners/PuffLoader';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
@@ -131,7 +132,7 @@ const DashHeader = () => {
 
     let buttonContent;
     if (isLoading) {
-        buttonContent = <p>Déconnection en cours...</p>
+        buttonContent = <PuffLoader color={"#FFF"} />
     } else {
         buttonContent = (
             <>

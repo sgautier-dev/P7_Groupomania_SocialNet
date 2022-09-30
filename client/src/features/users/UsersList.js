@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGetUsersQuery } from './usersApiSlice';
 import User from './User';
+import PuffLoader from 'react-spinners/PuffLoader';
 
 const UsersList = () => {
   const {
@@ -13,11 +14,11 @@ const UsersList = () => {
     pollingInterval: 60000, //re-fetching data every 60s
     refetchOnFocus: true, //re-fetching data if user put focus on an other window
     refetchOnMountOrArgChange: true //re-fetching data on the component mounting or changing
-});
+  });
 
   let content;
 
-  if (isLoading) content = <p>En cours de chargement...</p>;
+  if (isLoading) content = <PuffLoader color={"#FFF"} />;
 
   if (isError) {
     content = <p className="errmsg">{error?.data?.message}</p>

@@ -13,11 +13,13 @@ const initialState = postsAdapter.getInitialState();
 export const postsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getPosts: builder.query({
-            query: () => '/posts',
-            //because isError may be true even if status is 200, from redux doc
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError
-            },
+            query: () => ({
+                url: '/posts',
+                 //because isError may be true even if status is 200, from redux doc
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                },
+            }),
             //mapping _id to id
             transformResponse: responseData => {
                 const loadedPosts = responseData.map(user => {

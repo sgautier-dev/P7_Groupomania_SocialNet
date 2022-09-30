@@ -68,6 +68,10 @@
 	visibility: hidden;
 }
 
+.spinner {
+	color: var(--COLOR);
+}
+
 /* || GENERAL STYLES */
 
 body {
@@ -440,7 +444,7 @@ img {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	gap: 0.5em;
+	gap: 1em;
 	position: absolute;
 	right: 0.5em;
 }

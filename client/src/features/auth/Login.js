@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +6,7 @@ import { setCredentials } from './authSlice';
 import { useLoginMutation } from './authApiSlice';
 
 import usePersist from '../../hooks/usePersist';
+import PuffLoader from 'react-spinners/PuffLoader';
 
 const Login = () => {
   const userRef = useRef();//to set focus
@@ -60,7 +60,7 @@ const Login = () => {
 
   const errClass = errMsg ? "errmsg" : "offscreen";
 
-  if (isLoading) return <p>En cours de chargement...</p>
+  if (isLoading) return <PuffLoader color={"#FFF"} />
 
   const content = (
 

@@ -4,7 +4,7 @@ import { usersApiSlice } from '../users/usersApiSlice';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
-//manually subscribing posts and users to prevent default 60s expire from cache, unsubscribe when leaving the protected pages
+//manually subscribing posts and users to prevent default Redux keepUnUsedData of 60s expire from cache and state persistance if user refresh browser, unsubscribe when leaving the protected pages
 const Prefetch = () => {
     useEffect(() => {
         console.log('subscribing')

@@ -85,7 +85,7 @@ const RegisterUserForm = () => {
                 <>
                     <p ref={errRef} className={isError ? "errmsg" : "offscreen"} aria-live="assertive">{error?.data?.message}</p>
                     <form className="form" onSubmit={handleSubmit}>
-                    <h1>Inscription Employé</h1>
+                        <h1>Inscription Employé</h1>
                         <label htmlFor="username">
                             Nom d'utilisateur:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
@@ -183,7 +183,7 @@ const RegisterUserForm = () => {
                         </p>
 
                         <button className="form__submit-button"
-                        disabled={!validName || !validPwd || !validMatch ? true : false}>S'inscrire</button><br/>
+                            disabled={!validName || !validPwd || !validMatch ? true : false}>S'inscrire</button><br />
                     </form>
                 </>
             )}

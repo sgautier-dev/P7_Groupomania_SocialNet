@@ -15,8 +15,11 @@ import PersistLogin from './features/auth/PersistLogin';
 import RequireAuth from './features/auth/requireAuth';
 import Signup from './components/Signup';
 import PublicLayout from './components/PublicLayout';
+import useTitle from './hooks/useTitle';
 
 function App() {
+  useTitle('GroupoNet');
+  
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
