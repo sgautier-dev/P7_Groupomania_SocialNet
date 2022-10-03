@@ -17,7 +17,7 @@ console.log(process.env.NODE_ENV);
 
 connectDB();
 
-app.use(logger);
+//app.use(logger);//Uncomment if needed requests log
 
 app.use(express.json());
 app.use(cookieParser());

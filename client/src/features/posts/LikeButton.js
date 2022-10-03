@@ -9,26 +9,25 @@ const LikeButton = ({ post }) => {
     let postIsLiked = post?.likes.includes(userId);
     let numLikes = post?.likes.length;
 
-
     const [updatePostLike] = useAddLikeMutation();
 
     const [like, setLike] = useState(postIsLiked);
 
     const handleLike = () => setLike(prev => !prev);
 
-        const onLikeClicked = async () => {
-            handleLike();
+    const onLikeClicked = async () => {
+        handleLike();
 
-            let newLikes = [...post.likes];
+        let newLikes = [...post.likes];
 
-            if (!like && !postIsLiked) {
-                newLikes.push(userId);
-            } else {
-                newLikes = newLikes.filter(user => user !== userId);
-            }
-
-            await updatePostLike({...post, likes: newLikes});
+        if (!like && !postIsLiked) {
+            newLikes.push(userId);
+        } else {
+            newLikes = newLikes.filter(user => user !== userId);
         }
+
+        await updatePostLike({ ...post, likes: newLikes });
+    }
 
     const likeClass = (like) ? "liked" : "unliked";
 

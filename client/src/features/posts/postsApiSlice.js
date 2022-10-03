@@ -5,7 +5,7 @@ import {
 import { apiSlice } from "../../app/api/apiSlice";
 
 const postsAdapter = createEntityAdapter({
-    sortComparer: (a, b) => b.updatedAt.localeCompare(a.updatedAt)
+    sortComparer: (a, b) => b.createdAt.localeCompare(a.createdAt)
 });//sorting from more recent to oldest
 
 const initialState = postsAdapter.getInitialState();

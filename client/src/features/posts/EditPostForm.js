@@ -34,7 +34,7 @@ const EditPostForm = ({ post, users }) => {
         if (isSuccess || isDelSuccess) {
             setText('')
             setUserId('')
-            navigate('/dash/posts')
+            navigate('/dash')
         }
 
     }, [isSuccess, isDelSuccess, navigate]);
@@ -144,7 +144,7 @@ const EditPostForm = ({ post, users }) => {
                     onChange={onTextChanged}
                 />
                 <label className="form__label" htmlFor="image">
-                    IMAGE:</label>
+                    IMAGE: <span className="post__info">--3MB max, seuls .jpeg .jpg et .png formats acceptés--</span></label>
                 <input
                     className="form__input"
                     type="file"

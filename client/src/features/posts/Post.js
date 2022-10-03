@@ -70,7 +70,7 @@ const Post = ({ postId }) => {
                 <ReadMore text={post.text} />
                 {image}
                 <p className="postCredit">
-                    {post.username} <TimeAgo timestamp={post.updatedAt} />
+                    {post.username} <TimeAgo timestamp={post.createdAt} />
                 </p>
 
                 <div className="list__buttons">

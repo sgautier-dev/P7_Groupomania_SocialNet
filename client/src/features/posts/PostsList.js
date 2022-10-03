@@ -1,6 +1,9 @@
 import { useGetPostsQuery } from "./postsApiSlice";
+import { useState } from "react";
 import Post from "./Post";
 import PuffLoader from 'react-spinners/PuffLoader';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const PostsList = () => {
     const {
@@ -15,6 +18,8 @@ const PostsList = () => {
         refetchOnMountOrArgChange: true //re-fetching data on the component mounting or changing
     });
 
+    const [searchResults, setSearchResults] = useState();
+
     let content;
 
     if (isLoading) content = <PuffLoader color={"#FFF"} />;
@@ -24,12 +29,35 @@ const PostsList = () => {
     };
 
     if (isSuccess) {
-        const { ids } = posts;
+        const { ids, entities } = posts;
 
-        const listContent = ids?.length && ids.map(postId => <Post key={postId} postId={postId} />);
+        if (!searchResults) setSearchResults(ids);//for first render
+
+        const handleSubmit = (e) => e.preventDefault();
+
+        const handleSearchChange = (e) => {
+            if (!e.target.value) return setSearchResults(ids);
+
+            const resultsArray = ids.filter(postId => entities[postId].username.toLowerCase().includes(e.target.value) || entities[postId].text.toLowerCase().includes(e.target.value));
+
+            setSearchResults(resultsArray);
+        };
+
+        const listContent = searchResults?.length ? searchResults.map(postId => <Post key={postId} postId={postId} />) : <p>Aucune correspondance</p>;
 
         return (
             <section>
+                <form className="search" onSubmit={handleSubmit}>
+                    <input
+                        className="search__input"
+                        type="text"
+                        id="search"
+                        onChange={handleSearchChange}
+                    />
+                    <button className="search__button">
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
+                </form>
                 {listContent}
             </section>
         );

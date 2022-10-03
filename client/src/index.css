@@ -80,8 +80,8 @@ body {
 	background-color: var(--BGCOLOR);
 	color: var(--COLOR);
 	background-image: url("./img/background.jpg");
-	background-size: cover;
-	background-position: top right;
+	background-size: contain;
+	background-position: top;
 	background-blend-mode: multiply;
 }
 
@@ -165,21 +165,21 @@ a:focus-visible {
 .public-logo__container {
 	display: flex;
 	align-items: center;
-  	justify-content: center;
+	justify-content: center;
 	min-height: 70vh;
 }
 
 .public__logo {
-	width: 220px; 
+	width: 350px;
 }
 
 .logo {
-	width: 200px; 
-	margin: auto; 
-	display: block
+	width: 200px;
+	margin: auto;
+	display: block;
+	padding: 5px;
 }
 
-.logo:hover,
 .public__logo:hover {
 	transform: scale(1.2);
 	color: var(--LINK-HOVER);
@@ -346,7 +346,6 @@ img {
 	width: 100%;
 	border-radius: 15px;
 	object-fit: cover;
-	
 }
 
 .liked {
@@ -360,7 +359,42 @@ img {
 }
 
 .likes {
+	font-style: italic;
+	font-size: smaller;
+}
 
+/* ||  SEARCH BAR */
+.search {
+	width: 100%;
+	border: 2px solid var(--TABLE-COLOR);
+	border-radius: 2em;
+	overflow: hidden;
+	font-size: 1rem;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.search__button,
+.search__input {
+	background-color: var(--COLOR);
+	border: none;
+	outline: none;
+}
+
+.search__input {
+	padding: 1em;
+	width: 85%;
+}
+
+.search__button {
+	width: 15%;
+	font-size: 1.5rem;
+	padding-right: 0.5em;
+	color: var(--BGCOLOR);
+	display: grid;
+	place-content: center;
 }
 
 /* ||  POST */
@@ -378,6 +412,10 @@ img {
 .post__readmore {
 	font-weight: bold;
 	cursor: pointer;
+	color: var(--LINK-HOVER);
+}
+
+.post__info {
 	color: var(--LINK-HOVER);
 }
 
@@ -470,12 +508,20 @@ img {
 		font-size: 2rem;
 	}
 
+	.logo {
+		width: 130px;
+	}
+
 	.dash-header__nav {
 		gap: 0;
 	}
 
 	.icon-button {
 		font-size: 1.5rem;
+	}
+	
+	.search {
+		font-size: 0.5rem;
 	}
 }
 
@@ -517,4 +563,5 @@ img {
 	.form__action-buttons {
 		position: static;
 	}
+
 }

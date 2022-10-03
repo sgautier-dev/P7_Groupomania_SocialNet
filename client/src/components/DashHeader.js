@@ -9,11 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PuffLoader from 'react-spinners/PuffLoader';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
-
 import useAuth from '../hooks/useAuth';
-
 import logo from '../img/icon-left-font-monochrome-white.svg';
 
 const DASH_REGEX = /^\/dash(\/)?$/;
@@ -40,7 +37,7 @@ const DashHeader = () => {
 
     const onNewPostClicked = () => navigate('/dash/posts/new');
     const onNewUserClicked = () => navigate('/dash/users/new');
-    const onPostsClicked = () => navigate('/dash/posts');
+    const onPostsClicked = () => navigate('/dash');
     const onUsersClicked = () => navigate('/dash/users');
     const onUserClicked = () => navigate(`/dash/users/${userId}`);
 
@@ -52,7 +49,7 @@ const DashHeader = () => {
     };
 
     let newPostButton = null
-    if (POSTS_REGEX.test(pathname)) {
+    if (POSTS_REGEX.test(pathname) || DASH_REGEX.test(pathname)) {
         newPostButton = (
             <button
                 className="icon-button"
@@ -91,7 +88,6 @@ const DashHeader = () => {
             )
         }
     } else {
-        console.log(pathname)
         if (!pathname.includes('/users')) {
             userButton = (
                 <button
@@ -106,7 +102,7 @@ const DashHeader = () => {
     }
 
     let postsButton = null
-    if (!POSTS_REGEX.test(pathname) && pathname.includes('/dash')) {
+    if (!DASH_REGEX.test(pathname) && pathname.includes('/dash')) {
         postsButton = (
             <button
                 className="icon-button"
@@ -127,6 +123,11 @@ const DashHeader = () => {
             <FontAwesomeIcon icon={faRightFromBracket} />
         </button>
     );
+    
+    //scroll to the top of the page on logo click
+    const handleLogoClick = () => {
+        window.scrollTo(0, 0);
+    };
 
     const errClass = isError ? "errmsg" : "offscreen";
 
@@ -157,6 +158,7 @@ const DashHeader = () => {
                             className="logo"
                             src={logo}
                             alt="groupomania logo"
+                            onClick={handleLogoClick}
                         />
                     </Link>
                     <nav className="dash-header__nav">

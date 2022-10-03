@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../img/icon-left-font.svg';
+import logo from '../img/icon-left-font-monochrome-white.svg';
 
 const Public = () => {
     const content = (
@@ -13,7 +13,7 @@ const Public = () => {
                         <img
                             className="public__logo"
                             src={logo}
-                            alt="groupomania logo"
+                            alt="Grouponet Connection"
                         />
                     </Link>
                 </div>
