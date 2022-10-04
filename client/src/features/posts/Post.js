@@ -50,7 +50,7 @@ const Post = ({ postId }) => {
             </button>)
             deleteButton = (<button
                 className="icon-button"
-                title="Delete"
+                title="Supprimer"
                 onClick={onDeletePostClicked}
             >
                 <FontAwesomeIcon icon={faTrashCan} />

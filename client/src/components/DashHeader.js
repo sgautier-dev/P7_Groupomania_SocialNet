@@ -35,25 +35,25 @@ const DashHeader = () => {
         if (isSuccess) navigate('/')
     }, [isSuccess, navigate]);
 
-    const onNewPostClicked = () => navigate('/dash/posts/new');
+    const onNewPostClicked = () => navigate('/dash/posts');
     const onNewUserClicked = () => navigate('/dash/users/new');
     const onPostsClicked = () => navigate('/dash');
     const onUsersClicked = () => navigate('/dash/users');
     const onUserClicked = () => navigate(`/dash/users/${userId}`);
 
 
-    //showing dash class if we are on dash posts or users path
+    //showing dash class small if we are on dash posts or users path
     let dashClass = null
-    if (!DASH_REGEX.test(pathname) && !POSTS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
-        dashClass = "dash-header__container--small"
-    };
+    // if (!DASH_REGEX.test(pathname) && !POSTS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
+    //     dashClass = "dash-header__container--small"
+    // };
 
     let newPostButton = null
-    if (POSTS_REGEX.test(pathname) || DASH_REGEX.test(pathname)) {
+    if (DASH_REGEX.test(pathname)) {
         newPostButton = (
             <button
                 className="icon-button"
-                title="New Post"
+                title="Nouveau Message"
                 onClick={onNewPostClicked}
             >
                 <FontAwesomeIcon icon={faFilePen} />
@@ -66,7 +66,7 @@ const DashHeader = () => {
         newUserButton = (
             <button
                 className="icon-button"
-                title="New User"
+                title="Nouvel Utilisateur"
                 onClick={onNewUserClicked}
             >
                 <FontAwesomeIcon icon={faUserPlus} />
@@ -80,7 +80,7 @@ const DashHeader = () => {
             userButton = (
                 <button
                     className="icon-button"
-                    title="Users"
+                    title="Utilisateurs"
                     onClick={onUsersClicked}
                 >
                     <FontAwesomeIcon icon={faUserGear} />
@@ -92,7 +92,7 @@ const DashHeader = () => {
             userButton = (
                 <button
                     className="icon-button"
-                    title="Users"
+                    title="Compte Utilisateur"
                     onClick={onUserClicked}
                 >
                     <FontAwesomeIcon icon={faUserGear} />
@@ -106,7 +106,7 @@ const DashHeader = () => {
         postsButton = (
             <button
                 className="icon-button"
-                title="Posts"
+                title="Fil d'actu"
                 onClick={onPostsClicked}
             >
                 <FontAwesomeIcon icon={faRectangleList} />
@@ -117,7 +117,7 @@ const DashHeader = () => {
     const logoutButton = (
         <button
             className="icon-button"
-            title="Logout"
+            title="Se déconnecter"
             onClick={sendLogout}
         >
             <FontAwesomeIcon icon={faRightFromBracket} />

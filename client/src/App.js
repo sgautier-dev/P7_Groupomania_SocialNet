@@ -15,6 +15,7 @@ import RequireAuth from './features/auth/requireAuth';
 import Signup from './components/Signup';
 import PublicLayout from './components/PublicLayout';
 import useTitle from './hooks/useTitle';
+import { Navigate } from 'react-router-dom';
 
 function App() {
   useTitle('GroupoNet');
@@ -46,15 +47,16 @@ function App() {
               </Route>
 
               <Route path="posts">
-
+                <Route index element={<NewPost />} />
                 <Route path=":id" element={<EditPost />} />
-                <Route path="new" element={<NewPost />} />
               </Route>
+
+              {/* Catch all - if route does not exists bring back to root (replace wrong path in history) */}
+              <Route path="*" element={<Navigate to="/dash" replace />} />
 
             </Route>{/* End Dash */}
           </Route>
         </Route>{/* End Protected Routes */}
-
       </Route>
     </Routes>
   );

@@ -86,7 +86,7 @@ const EditPostForm = ({ post, users }) => {
         deleteButton = (
             <button
                 className="icon-button"
-                title="Delete"
+                title="Supprimer"
                 onClick={onDeletePostClicked}
             >
                 <FontAwesomeIcon icon={faTrashCan} />
@@ -95,7 +95,7 @@ const EditPostForm = ({ post, users }) => {
         saveButton = (
             <button
                 className="icon-button"
-                title="Save"
+                title="Sauvegarder"
                 onClick={onSavePostClicked}
                 disabled={!canSave}
             >
@@ -127,11 +127,8 @@ const EditPostForm = ({ post, users }) => {
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
-                    <h2>Modifier Post</h2>
-                    <div className="form__action-buttons">
-                        {saveButton}
-                        {deleteButton}
-                    </div>
+                    <h2>Modification</h2>
+
                 </div>
 
                 <label className="form__label" htmlFor="post-text">
@@ -144,7 +141,7 @@ const EditPostForm = ({ post, users }) => {
                     onChange={onTextChanged}
                 />
                 <label className="form__label" htmlFor="image">
-                    IMAGE: <span className="post__info">--3MB max, seuls .jpeg .jpg et .png formats acceptés--</span></label>
+                    IMAGE: <span className="post__info">--Formats .jpeg .jpg et .png, 3MB max--</span></label>
                 <input
                     className="form__input"
                     type="file"
@@ -159,6 +156,10 @@ const EditPostForm = ({ post, users }) => {
                         <p className="form__created">Created:<br />{created}</p>
                         <p className="form__updated">Updated:<br />{updated}</p>
                     </div>
+                </div>
+                <div className="form__action-buttons">
+                    {saveButton}
+                    {deleteButton}
                 </div>
             </form>
         </>

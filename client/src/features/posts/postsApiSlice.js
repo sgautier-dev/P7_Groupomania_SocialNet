@@ -26,7 +26,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                     user.id = user._id;
                     return user;
                 });
-                return postsAdapter.setAll(initialState, loadedPosts)
+                return postsAdapter.setAll(initialState, loadedPosts)//normalizing data through EntityAdapter
             },
 
             providesTags: (result, error, arg) => {
@@ -105,10 +105,10 @@ export const {
     useAddLikeMutation,
 } = postsApiSlice;
 
-// returns the query result object
+// returns the query entire result object
 export const selectPostsResult = postsApiSlice.endpoints.getPosts.select();
 
-// creates memoized selector
+// creates memoized selector with result data
 const selectPostsData = createSelector(
     selectPostsResult,
     postsResult => postsResult.data // normalized state object with ids & entities
@@ -119,5 +119,5 @@ export const {
     selectAll: selectAllPosts,
     selectById: selectPostById,
     selectIds: selectPostIds
-    // Pass in a selector that returns the posts slice of state
+    // Pass in a selector that returns the posts slice of state or initial state if null
 } = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState);

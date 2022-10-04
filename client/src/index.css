@@ -80,9 +80,8 @@ body {
 	background-color: var(--BGCOLOR);
 	color: var(--COLOR);
 	background-image: url("./img/background.jpg");
-	background-size: contain;
-	background-position: top;
-	background-blend-mode: multiply;
+	background-size: cover;
+	background-blend-mode: overlay;
 }
 
 input,
@@ -174,7 +173,7 @@ a:focus-visible {
 }
 
 .logo {
-	width: 200px;
+	width: 250px;
 	margin: auto;
 	display: block;
 	padding: 5px;
@@ -365,7 +364,8 @@ img {
 
 /* ||  SEARCH BAR */
 .search {
-	width: 100%;
+	width: 60%;
+	margin: auto;
 	border: 2px solid var(--TABLE-COLOR);
 	border-radius: 2em;
 	overflow: hidden;
@@ -459,6 +459,11 @@ img {
 	border-radius: 15px;
 }
 
+.form__submit-button {
+	width: 50%;
+	margin: auto;
+}
+
 .form__input--text {
 	min-height: 150px;
 }
@@ -482,9 +487,10 @@ img {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	gap: 1em;
-	position: absolute;
-	right: 0.5em;
+	gap: 0.5em;
+	position: relative;
+	right: 1em;
+	bottom: 3em
 }
 
 .form__file {
@@ -514,6 +520,10 @@ img {
 
 	.dash-header__nav {
 		gap: 0;
+	}
+
+	.dash-footer {
+		font-size: 0.8rem;
 	}
 
 	.icon-button {
@@ -560,8 +570,13 @@ img {
 		display: block;
 	}
 
-	.form__action-buttons {
-		position: static;
+
+}
+
+@media screen and (min-width: 1600px) {
+
+	.dash-container {
+		padding: 1em 18em;
 	}
 
 }

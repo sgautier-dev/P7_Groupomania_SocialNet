@@ -84,16 +84,8 @@ const NewPostForm = ({ users }) => {
 
             <form className="form" encType="multipart/form-data" onSubmit={onSavePostClicked}>
                 <div className="form__title-row">
-                    <h2>Nouveau Post</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                    </div>
+                    <h2>Nouveau Message</h2>
+
                 </div>
 
                 <label className="form__label" htmlFor="text">
@@ -106,7 +98,7 @@ const NewPostForm = ({ users }) => {
                     onChange={onTextChanged}
                 />
                 <label className="form__label" htmlFor="image">
-                    IMAGE: <span className="post__info">--3MB max, seuls .jpeg .jpg et .png formats acceptés--</span></label>
+                    IMAGE: <span className="post__info">--Formats .jpeg .jpg et .png, 3MB max--</span></label>
                 <input
                     className="form__input"
                     type="file"
@@ -116,7 +108,17 @@ const NewPostForm = ({ users }) => {
                     onChange={onFileChanged}
                 />
                 {ownerSelect}
-                
+
+                <div className="form__action-buttons">
+                    <button
+                        className="icon-button"
+                        title="Sauvegarder"
+                        disabled={!canSave}
+                    >
+                        <FontAwesomeIcon icon={faSave} />
+                    </button>
+                </div>
+
             </form>
         </>
     )

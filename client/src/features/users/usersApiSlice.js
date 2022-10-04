@@ -20,7 +20,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     user.id = user._id;
                     return user;
                 });
-                return usersAdapter.setAll(initialState, loadedUsers)
+                return usersAdapter.setAll(initialState, loadedUsers)//normalizing data through EntityAdapter
             },
             //safe guard if query returns no ids
             providesTags: (result, error, arg) => {
@@ -78,10 +78,10 @@ export const {
     useDeleteUserMutation,            
  } = usersApiSlice;
 
-// returns the query result object
+// returns the query entire result object
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select();
 
-// creates memoized selector
+// creates memoized selector with result data
 const selectUsersData = createSelector(
     selectUsersResult,
     usersResult => usersResult.data // normalized state object with ids & entities
@@ -92,5 +92,5 @@ export const {
     selectAll: selectAllUsers,
     selectById: selectUserById,
     selectIds: selectUserIds
-    // Pass in a selector that returns the users slice of state
+    // Pass in a selector that returns the users slice of state or initial state if null
 } = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState);

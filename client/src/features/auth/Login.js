@@ -68,7 +68,7 @@ const Login = () => {
       <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
       <form className="form" onSubmit={handleSubmit}>
-        <h1>Login Employé</h1>
+        <h1>Connexion</h1>
         <label htmlFor="email">Email:</label>
         <input
           className="form__input"

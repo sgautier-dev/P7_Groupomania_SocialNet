@@ -64,13 +64,10 @@ const NewUserForm = () => {
     }
   };
 
-
   const errClass = isError ? "errmsg" : "offscreen";
   const validUserClass = !validUsername ? 'form__input--incomplete' : '';
   const validEmailClass = !validEmail ? 'form__input--incomplete' : '';
   const validPwdClass = !validPassword ? 'form__input--incomplete' : '';
-  //const validRolesClass = !Boolean(roles.length) ? 'form__input--incomplete' : '';
-
 
   const content = (
     <>
@@ -79,15 +76,7 @@ const NewUserForm = () => {
       <form className="form" onSubmit={onSaveUserClicked}>
         <div className="form__title-row">
           <h2>Nouvel Utilisateur</h2>
-          <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              disabled={!canSave}
-            >
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-          </div>
+          
         </div>
         <label className="form__label" htmlFor="username">
           Nom d'utilisateur: <span className="nowrap">[3-20 lettres]</span></label>
@@ -114,7 +103,7 @@ const NewUserForm = () => {
         />
 
         <label className="form__label" htmlFor="password">
-          Password: <span className="nowrap">[4-12 chars incl. !@#$%]</span></label>
+          Mot de passe: <span className="nowrap">[4-12 caracs incl. !@#$%]</span></label>
         <input
           className={`form__input ${validPwdClass}`}
           id="password"
@@ -123,6 +112,16 @@ const NewUserForm = () => {
           value={password}
           onChange={onPasswordChanged}
         />
+        <br/><br/>
+        <div className="form__action-buttons">
+            <button
+              className="icon-button"
+              title="Sauvegarder"
+              disabled={!canSave}
+            >
+              <FontAwesomeIcon icon={faSave} />
+            </button>
+          </div>
 
       </form>
     </>
