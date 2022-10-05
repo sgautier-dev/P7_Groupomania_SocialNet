@@ -51,6 +51,7 @@ const PostsList = () => {
                     <input
                         className="search__input"
                         type="text"
+                        placeholder="Rechercher"
                         id="search"
                         onChange={handleSearchChange}
                     />
