@@ -42,11 +42,11 @@ const Login = () => {
       navigate('/dash');
     } catch (err) {
       if (!err.status) {
-        setErrMsg('No Server Response');
+        setErrMsg('Aucune réponse du serveur');
       } else if (err.status === 400) {
-        setErrMsg('Missing Email or Password');
+        setErrMsg('E-mail ou mot de passe manquant');
       } else if (err.status === 401) {
-        setErrMsg('Unauthorized');
+        setErrMsg('Non autorisé');
       } else {
         setErrMsg(err.data?.message);
       }

@@ -10,7 +10,7 @@ const PersistLogin = () => {
 
     const [persist] = usePersist();
     const token = useSelector(selectCurrentToken);
-    const effectRan = useRef(false);//to handle React V18 strict mode initial double mounting of components
+    const effectRan = useRef(false);//to handle React V18 strict mode in development initial double mounting of components
 
     const [trueSuccess, setTrueSuccess] = useState(false);
 

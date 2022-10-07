@@ -2,14 +2,14 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
-import { useAddLikeMutation } from "./postsApiSlice";
+import { useUpdateLikesMutation } from "./postsApiSlice";
 
 const LikeButton = ({ post }) => {
     const { userId } = useAuth();
     let postIsLiked = post?.likes.includes(userId);
     let numLikes = post?.likes.length;
 
-    const [updatePostLike] = useAddLikeMutation();
+    const [updatePostLike] = useUpdateLikesMutation();
 
     const [like, setLike] = useState(postIsLiked);
 

@@ -76,6 +76,11 @@ select {
 	visibility: hidden;
 }
 
+.notFound {
+	display: grid;
+	place-content: center;
+}
+
 /* || GENERAL STYLES */
 
 body {
@@ -382,7 +387,7 @@ img {
 }
 
 .search__input {
-	padding: 1em;
+	padding: 0.5em;
 	width: 85%;
 }
 

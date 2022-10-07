@@ -3,6 +3,7 @@ import { setCredentials } from '../../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:3500',
+    //to allow authentification, cookies in requests
     credentials: 'include',
     //setting authorization header with current token
     prepareHeaders: (headers, { getState }) => {
@@ -15,7 +16,7 @@ const baseQuery = fetchBaseQuery({
     }
 });
 
-//setting refresh token in status 403
+//setting refresh token if status 403
 const baseQueryWithReauth = async (args, api, extraOptions) => {
     // args // request url, method, body
     // api // signal, dispatch, getState()
@@ -37,7 +38,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         } else {
 
             if (refreshResult?.error?.status === 403) {
-                refreshResult.error.data.message = "Votre sessions a expirée."
+                refreshResult.error.data.message = "Votre session a expirée."
             }
             return refreshResult
         }

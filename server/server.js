@@ -18,7 +18,6 @@ console.log(process.env.NODE_ENV);
 connectDB();
 
 //app.use(logger);//Uncomment if needed requests log
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));// with Cors options
@@ -38,9 +37,9 @@ app.all('*', (req, res) => {
     if (req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'))
     } else if (req.accepts('json')) {
-        res.json({ message: '404 Not Found' })
+        res.json({ message: '404 Non Trouvé' })
     } else {
-        res.type('txt').send('404 Not Found')
+        res.type('txt').send('404 Non Trouvé')
     }
 });
 

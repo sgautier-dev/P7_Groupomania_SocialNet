@@ -46,7 +46,7 @@ const EditPostForm = ({ post, users }) => {
     const canSave = [text, userId, post.id].every(Boolean) && !isLoading
 
     const onSavePostClicked = async (e) => {
-        //id: post.id, user: userId, text
+  
         const data = new FormData();
         console.log(file);
         data.append('id', post.id);

@@ -32,7 +32,6 @@ const Post = ({ postId }) => {
         //const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' });
 
         const handleEdit = () => navigate(`/dash/posts/${postId}`);
-        //const handleLike = () => setLike(prev => !prev);
 
         const onDeletePostClicked = async () => {
             console.log(post.imageUrl)

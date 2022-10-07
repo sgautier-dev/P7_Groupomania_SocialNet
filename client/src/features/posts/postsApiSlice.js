@@ -70,7 +70,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 { type: 'Post', id: arg.id }
             ]
         }),
-        addLike: builder.mutation({
+        updateLikes: builder.mutation({
             query: initialPost => ({
                 url: '/posts',
                 method: 'PATCH',
@@ -102,7 +102,7 @@ export const {
     useAddNewPostMutation,
     useUpdatePostMutation,
     useDeletePostMutation,
-    useAddLikeMutation,
+    useUpdateLikesMutation,
 } = postsApiSlice;
 
 // returns the query entire result object

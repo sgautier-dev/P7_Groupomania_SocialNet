@@ -15,7 +15,7 @@ import RequireAuth from './features/auth/requireAuth';
 import Signup from './components/Signup';
 import PublicLayout from './components/PublicLayout';
 import useTitle from './hooks/useTitle';
-import { Navigate } from 'react-router-dom';
+import NotFound from './components/NotFound';
 
 function App() {
   useTitle('GroupoNet');
@@ -29,6 +29,9 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
         </Route>
+
+        {/* Catch all - 404 */}
+        <Route path="*" element={<NotFound />} />
 
         {/* Protected Routes */}
         <Route element={<PersistLogin />}>
@@ -51,12 +54,13 @@ function App() {
                 <Route path=":id" element={<EditPost />} />
               </Route>
 
-              {/* Catch all - if route does not exists bring back to root (replace wrong path in history) */}
-              <Route path="*" element={<Navigate to="/dash" replace />} />
+              {/* Catch all - 404 */}
+              <Route path="*" element={<NotFound />} />
 
             </Route>{/* End Dash */}
           </Route>
         </Route>{/* End Protected Routes */}
+
       </Route>
     </Routes>
   );

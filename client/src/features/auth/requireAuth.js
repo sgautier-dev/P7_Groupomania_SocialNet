@@ -9,7 +9,7 @@ const RequireAuth = () => {
 
     const content = (
         (isAdmin || id === userId) ? <Outlet />
-            : <Navigate to="/login" state={{ from: location }} replace /> //if not allowed bring back to login, "replace" removes requireAuth from browser history 
+            : <Navigate to="/login" state={{ from: location }} replace /> //if not allowed bring back to login, "replace" removes current location from browser history 
     );
 
     return content;

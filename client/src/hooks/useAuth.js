@@ -5,7 +5,7 @@ import jwtDecode from 'jwt-decode';//to decode token
 const useAuth = () => {
     const token = useSelector(selectCurrentToken);
     let isAdmin = false;
-    let status = "Employé";
+    let status = "Utilisateur";
 
     if (token) {
         const decoded = jwtDecode(token);

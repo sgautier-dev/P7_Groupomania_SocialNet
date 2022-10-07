@@ -17,3 +17,4 @@
 17. [x] admin aura droit de modifier et supprimer tous les posts
 18. [x] texte du site en police Lato
 19. [x] trois couleurs suggérées par Groupomania
+20. [x] responsive desktop, tablette et mobile

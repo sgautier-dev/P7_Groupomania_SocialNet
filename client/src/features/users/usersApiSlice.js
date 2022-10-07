@@ -14,13 +14,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError
                 },
             }),
-            //mapping _id to id
+            //mapping _id to id for normalization
             transformResponse: responseData => {
                 const loadedUsers = responseData.map(user => {
                     user.id = user._id;
                     return user;
                 });
-                return usersAdapter.setAll(initialState, loadedUsers)//normalizing data through EntityAdapter
+                return usersAdapter.setAll(initialState, loadedUsers)//normalizing data with EntityAdapter
             },
             //safe guard if query returns no ids
             providesTags: (result, error, arg) => {

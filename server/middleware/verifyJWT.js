@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 const verifyJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization || req.headers.Authorization;// looking or authorization with ou without capital letter
+    const authHeader = req.headers.authorization || req.headers.Authorization;// looking for authorization with ou without capital letter
 
     //verifying that Bearer exists in auth header
     if (!authHeader?.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Unauthorized' })
+        return res.status(401).json({ message: 'Non autorisé' })
     };
 
     //retrieving token from header
@@ -15,7 +15,7 @@ const verifyJWT = (req, res, next) => {
         token,
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
-            if (err) return res.status(403).json({ message: 'Forbidden' })
+            if (err) return res.status(403).json({ message: 'Interdit' })
             req.email = decoded.UserInfo.email
             req.adminRole = decoded.UserInfo.adminRole
             next()

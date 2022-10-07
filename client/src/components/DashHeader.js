@@ -14,7 +14,7 @@ import useAuth from '../hooks/useAuth';
 import logo from '../img/icon-left-font-monochrome-white.svg';
 
 const DASH_REGEX = /^\/dash(\/)?$/;
-const POSTS_REGEX = /^\/dash\/posts(\/)?$/;
+//const POSTS_REGEX = /^\/dash\/posts(\/)?$/;
 const USERS_REGEX = /^\/dash\/users(\/)?$/;
 
 const DashHeader = () => {
@@ -41,12 +41,6 @@ const DashHeader = () => {
     const onUsersClicked = () => navigate('/dash/users');
     const onUserClicked = () => navigate(`/dash/users/${userId}`);
 
-
-    //showing dash class small if we are on dash posts or users path
-    let dashClass = null
-    // if (!DASH_REGEX.test(pathname) && !POSTS_REGEX.test(pathname) && !USERS_REGEX.test(pathname)) {
-    //     dashClass = "dash-header__container--small"
-    // };
 
     let newPostButton = null
     if (DASH_REGEX.test(pathname)) {
@@ -151,7 +145,7 @@ const DashHeader = () => {
             <p className={errClass}>{error?.data?.message}</p>
 
             <header className="dash-header">
-                <div className={`dash-header__container ${dashClass}`}>
+                <div className={"dash-header__container"}>
                     <Link to="/dash">
 
                         <img

@@ -51,7 +51,7 @@ const login = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000 //cookie expiry: set to match refreshToken
     });
 
-    // Send accessToken containing email and role 
+    // Send accessToken with UserInfo 
     res.json({ accessToken });
 };
 
