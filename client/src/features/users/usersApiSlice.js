@@ -14,7 +14,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError
                 },
             }),
-            //mapping _id to id for normalization
+            //mapping _id to id as EntityAdapter require id
             transformResponse: responseData => {
                 const loadedUsers = responseData.map(user => {
                     user.id = user._id;
@@ -26,6 +26,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
+                        //full List tag and specific user ids tags
                         { type: 'User', id: 'LIST' },
                         ...result.ids.map(id => ({ type: 'User', id }))
                     ]
@@ -40,7 +41,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     ...initialUserData,
                 }
             }),
-            //forcing cache to update
+            //forcing LIST cache to update
             invalidatesTags: [
                 { type: 'User', id: 'LIST' }
             ]
@@ -53,7 +54,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     ...initialUserData,
                 }
             }),
-            //forcing cache to update
+            //invalidating only individual user id
             invalidatesTags: (result, error, arg) => [
                 { type: 'User', id: arg.id }
             ]
@@ -64,6 +65,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: 'DELETE',
                 body: { id }
             }),
+            //invalidating only individual user id
             invalidatesTags: (result, error, arg) => [
                 { type: 'User', id: arg.id }
             ]
@@ -81,7 +83,7 @@ export const {
 // returns the query entire result object
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select();
 
-// creates memoized selector with result data
+// creates memoized selector with result data so only if selectUsersResult changes will trigger re-render, for App optimization
 const selectUsersData = createSelector(
     selectUsersResult,
     usersResult => usersResult.data // normalized state object with ids & entities

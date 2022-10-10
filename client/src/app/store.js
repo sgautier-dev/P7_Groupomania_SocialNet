@@ -14,4 +14,4 @@ export const store = configureStore({
     devTools: true
 });
 
-setupListeners(store.dispatch); //to be able to refetch data in query hooks options
+setupListeners(store.dispatch); //to access to options like being able to refetch data on intervall in query hooks

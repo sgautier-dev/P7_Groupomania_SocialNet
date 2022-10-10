@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -6,17 +6,25 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 GroupoNet App, Groupomania's employees social network. In development.
 
-### Installing dependencies
+## Author
 
-In the server directory run: `npm install`
-In the client directory run: `npm install`
+Sébastien Gautier
 
-#### Starting the App in development mode
+## References
+    https://redux.js.org/
+    https://www.codecademy.com/
 
-In the server directory run: `npm run dev`
-In the client directory run: `npm start`
+## Installing dependencies
 
-##### Viewing the App
+From the server directory run: `npm install`
+From the client directory run: `npm install`
+
+## Starting the App in development mode
+
+From the server directory run: `npm run dev`
+From the client directory run: `npm start`
+
+## Viewing the App
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 

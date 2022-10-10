@@ -12,7 +12,7 @@ const UsersList = () => {
     error
   } = useGetUsersQuery('usersList', {
     pollingInterval: 60000, //re-fetching data every 60s
-    refetchOnFocus: true, //re-fetching data if user put focus on an other window
+    refetchOnFocus: true, //re-fetching data if user put focus on an other window and comes back
     refetchOnMountOrArgChange: true //re-fetching data on the component mounting or changing
   });
 

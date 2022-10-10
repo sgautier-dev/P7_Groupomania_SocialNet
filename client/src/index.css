@@ -278,7 +278,7 @@ a:focus-visible {
 thead,
 tbody,
 tr {
-	display: contents;
+	display: contents; /* to be able to use grid on table */
 }
 
 .table {

@@ -72,6 +72,7 @@ const EditUserForm = ({ user }) => {
     const onSaveUserClicked = async (e) => {
         if (password) {
             await updateUser({ id: user.id, username, email, password, adminRole, active })
+        //in order to populate with password only when it is changed
         } else {
             await updateUser({ id: user.id, username, email, adminRole, active })
         }
@@ -81,7 +82,7 @@ const EditUserForm = ({ user }) => {
         await deleteUser({ id: user.id })
     };
 
-    let canSave
+    let canSave //with or without pwd change
     if (password) {
         canSave = [validEmail, validUsername, validPassword].every(Boolean) && !isLoading
     } else {

@@ -145,7 +145,7 @@ const DashHeader = () => {
             <p className={errClass}>{error?.data?.message}</p>
 
             <header className="dash-header">
-                <div className={"dash-header__container"}>
+                <div className="dash-header__container">
                     <Link to="/dash">
 
                         <img

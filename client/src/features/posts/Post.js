@@ -13,9 +13,9 @@ import ReadMore from './ReadMore';
 
 const Post = ({ postId }) => {
 
-    const post = useSelector(state => selectPostById(state, postId))
+    const post = useSelector(state => selectPostById(state, postId));
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const { isAdmin, username } = useAuth();
     let isAuthor;
@@ -28,8 +28,6 @@ const Post = ({ postId }) => {
 
 
     if (post) {
-        // const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' })
-        //const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' });
 
         const handleEdit = () => navigate(`/dash/posts/${postId}`);
 
