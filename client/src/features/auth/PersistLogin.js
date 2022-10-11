@@ -43,11 +43,11 @@ const PersistLogin = () => {
             if (!token && persist) verifyRefreshToken()//when refreshing page for example token is null
         }
 
-        return () => effectRan.current = true;//setting to true after first mounting
+        return () => effectRan.current = true;//setting to true in cleanup func after first mounting
 
+        //removing the unnecessary warning about dependencies
         // eslint-disable-next-line
     }, []);
-
 
     let content;
     if (!persist) { // persist: no
@@ -61,9 +61,7 @@ const PersistLogin = () => {
                 <Link to="/login">Veuillez vous reconnecter</Link>.
             </p>
         )
-    } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
-        content = <Outlet />
-    } else if (token && isUninitialized) { //persist: yes, token: yes
+    } else if ((isSuccess && trueSuccess) || (token && isUninitialized)) { //persist: yes, token: yes
         content = <Outlet />
     };
 

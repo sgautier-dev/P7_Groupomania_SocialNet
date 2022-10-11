@@ -3,7 +3,7 @@ import { setCredentials } from '../../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:3500',
-    //to allow authentification, cookies in requests
+    //to attach cookie in requests
     credentials: 'include',
     //setting authorization header with current token
     prepareHeaders: (headers, { getState }) => {

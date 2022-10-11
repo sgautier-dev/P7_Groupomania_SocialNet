@@ -47,7 +47,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 body: data
             }),
             invalidatesTags: [
-                { type: 'Post', id: "LIST" }
+                { type: 'Post', id: 'LIST' }
             ]
         }),
         updatePost: builder.mutation({
