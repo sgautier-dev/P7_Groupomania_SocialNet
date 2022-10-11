@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+__test__
+setupTests.js
 
 # production
 /build
