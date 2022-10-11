@@ -5,10 +5,9 @@ import logo from '../img/icon-left-font-monochrome-white.svg';
 
 const PublicLayout = () => {
     const { pathname } = useLocation();
-    console.log(pathname)
+
     let footerLink = null;
     if (pathname === '/signup') {
-        console.log('signup')
         footerLink = (
             <p>
                 Déjà inscrit?
@@ -19,7 +18,6 @@ const PublicLayout = () => {
         );
     };
     if (pathname === '/login') {
-        console.log('login')
         footerLink = (
             <p>
                 Pas encore inscrit?

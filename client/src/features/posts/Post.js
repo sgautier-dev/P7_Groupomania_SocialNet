@@ -32,7 +32,6 @@ const Post = ({ postId }) => {
         const handleEdit = () => navigate(`/dash/posts/${postId}`);
 
         const onDeletePostClicked = async () => {
-            console.log(post.imageUrl)
             await deletePost({ id: post.id, imageUrl: post.imageUrl });
         };
 

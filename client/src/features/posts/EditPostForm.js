@@ -48,7 +48,6 @@ const EditPostForm = ({ post, users }) => {
     const onSavePostClicked = async (e) => {
   
         const data = new FormData();
-        console.log(file);
         data.append('id', post.id);
         data.append('user', userId);
         data.append('text', text);

@@ -67,7 +67,6 @@ const RegisterUserForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (canSave) {
-            console.log({ username, email, password });
             await addNewUser({ username, email, password });
         }
     }

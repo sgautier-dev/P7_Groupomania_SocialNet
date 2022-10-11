@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
+
 const USER_REGEX = /^[a-zA-Zàâéèëêïîôùüç'\s-]{3,20}$/;
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
@@ -150,6 +151,7 @@ const EditUserForm = ({ user }) => {
                         type="checkbox"
                         checked={adminRole}
                         onChange={onAdminRoleChanged}
+                        disabled={!isAdmin}
                     />
                 </label>
 
@@ -162,6 +164,7 @@ const EditUserForm = ({ user }) => {
                         type="checkbox"
                         checked={active}
                         onChange={onActiveChanged}
+                        disabled={!isAdmin}
                     />
                 </label>
                 <div className="form__action-buttons">

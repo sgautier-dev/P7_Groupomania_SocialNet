@@ -40,7 +40,6 @@ const NewPostForm = ({ users }) => {
         e.preventDefault()
 
         const data = new FormData();
-        console.log(file);
         data.append('user', userID);
         data.append('text', text);
         data.append('image', file);
