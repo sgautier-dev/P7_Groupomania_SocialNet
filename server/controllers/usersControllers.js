@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 */
 const registerUser = async (req, res) => {
 
-    const { username, email, password, adminRole } = req.body;
+    const { username, email, password } = req.body;
     //confirm data
     if (!username || !password || !email) {
         return res.status(400).json({ message: 'Toutes les données utilisateur valides sont requises' });
@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
     //Hashing password
     const hashedPwd = await bcrypt.hash(password, 10); // with salt rounds
 
-    const userObject = { username, email, "password": hashedPwd, adminRole };
+    const userObject = { username, email, "password": hashedPwd};
 
     //Create and store new user
     const user = await User.create(userObject);
@@ -71,7 +71,7 @@ const createUser = async (req, res) => {
 
     //Check for duplicates, exec() is recommended to be used with promise query by mongoose doc, collation is used to set case insensitivity
     const duplicateEmail = await User.findOne({ email }).lean().exec();
-    const duplicateUsername = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).lean().exec();
+    const duplicateUsername = await User.findOne({ username }).collation({ locale: 'fr', strength: 2 }).lean().exec();
 
     if (duplicateEmail) {
         return res.status(409).json({ message: 'Cet email existe déjà' });
@@ -159,7 +159,7 @@ const deleteUser = async (req, res) => {
     const user = await User.findById(id).exec();
 
     if (!user) {
-        return res.status(400).json({ message: 'Utilisateur on trouvé' });
+        return res.status(400).json({ message: 'Utilisateur non trouvé' });
     };
 
     const result = await user.deleteOne();

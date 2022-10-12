@@ -39,7 +39,7 @@ const NewPostForm = ({ users }) => {
     const onSavePostClicked = async (e) => {
         e.preventDefault()
 
-        const data = new FormData();
+        const data = new FormData();//to send multipart/form-data
         data.append('user', userID);
         data.append('text', text);
         data.append('image', file);

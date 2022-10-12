@@ -26,7 +26,7 @@ const EditUserForm = ({ user }) => {
     }] = useDeleteUserMutation();
 
     const navigate = useNavigate();
-    const { isAdmin } = useAuth();
+    const { isAdmin, userId } = useAuth();
 
     const [username, setUsername] = useState(user.username);
     const [validUsername, setValidUsername] = useState(false);
@@ -89,6 +89,9 @@ const EditUserForm = ({ user }) => {
     } else {
         canSave = [validEmail, validUsername].every(Boolean) && !isLoading
     }
+
+    //preventing user to delete is own account
+    let canDelete = userId !== user.id;
 
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen";
     const validUserClass = !validUsername ? 'form__input--incomplete' : '';
@@ -180,6 +183,7 @@ const EditUserForm = ({ user }) => {
                             className="icon-button"
                             title="Supprimer"
                             onClick={onDeleteUserClicked}
+                            disabled={!canDelete}
                         >
                             <FontAwesomeIcon icon={faTrashCan} />
                         </button>

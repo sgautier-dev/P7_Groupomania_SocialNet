@@ -47,7 +47,7 @@ const EditPostForm = ({ post, users }) => {
 
     const onSavePostClicked = async (e) => {
   
-        const data = new FormData();
+        const data = new FormData();//to send multipart/form-data
         data.append('id', post.id);
         data.append('user', userId);
         data.append('text', text);

@@ -24,6 +24,11 @@ Sébastien Gautier
     https://www.codecademy.com/
     https://openclassrooms.com/
 
+## Requirements
+
+    React V18
+    Node V16
+
 ## Installing dependencies
 
 From the server directory run: `npm install`
