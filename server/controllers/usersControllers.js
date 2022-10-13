@@ -1,6 +1,13 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
 const bcrypt = require('bcrypt');
+const emailValidator = require("email-validator");
+const passwordValidator = require('password-validator');
+const passwordSchema = new passwordValidator();
+
+passwordSchema
+    .has(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/);
+//to match with frontend password regex
 
 /**
 * @desc Create user on signup page
@@ -13,6 +20,18 @@ const registerUser = async (req, res) => {
     //confirm data
     if (!username || !password || !email) {
         return res.status(400).json({ message: 'Toutes les données utilisateur valides sont requises' });
+    }
+
+    if (!emailValidator.validate(email)) {
+        return res.status(400).json({ message: 'E-mail doit être valide!' });
+    }
+
+    if (!passwordSchema.validate(password)) {
+        return res.status(400).json({ message: 'Mot de passe doit être valide!' });
+    }
+
+    if ((username.toLowerCase() === process.env.ADMIN_USERNAME.toLowerCase()) || (email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase())) {
+        return res.status(400).json({ message: `${process.env.ADMIN_USERNAME} ou ${process.env.ADMIN_EMAIL} sont réservés` });
     }
 
     //Check for duplicates, exec() is recommended to be used with promise query by mongoose doc, collation is used to set case insensitivity
@@ -29,7 +48,7 @@ const registerUser = async (req, res) => {
     //Hashing password
     const hashedPwd = await bcrypt.hash(password, 10); // with salt rounds
 
-    const userObject = { username, email, "password": hashedPwd};
+    const userObject = { username, email, "password": hashedPwd };
 
     //Create and store new user
     const user = await User.create(userObject);
@@ -69,16 +88,20 @@ const createUser = async (req, res) => {
         return res.status(400).json({ message: 'Toutes les données utilisateur valides requises' });
     }
 
+    if ((username.toLowerCase() === process.env.ADMIN_USERNAME.toLowerCase()) || (email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase())) {
+        return res.status(400).json({ message: `${process.env.ADMIN_USERNAME} ou ${process.env.ADMIN_EMAIL} sont réservés` });
+    }
+
     //Check for duplicates, exec() is recommended to be used with promise query by mongoose doc, collation is used to set case insensitivity
     const duplicateEmail = await User.findOne({ email }).lean().exec();
     const duplicateUsername = await User.findOne({ username }).collation({ locale: 'fr', strength: 2 }).lean().exec();
 
     if (duplicateEmail) {
         return res.status(409).json({ message: 'Cet email existe déjà' });
-    };
+    }
     if (duplicateUsername) {
         return res.status(409).json({ message: 'Ce nom existe déjà' });
-    };
+    }
 
     //Hashing password
     const hashedPwd = await bcrypt.hash(password, 10); // with salt rounds

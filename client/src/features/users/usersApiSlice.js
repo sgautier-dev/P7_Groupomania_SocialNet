@@ -83,7 +83,7 @@ export const {
 // returns the query entire result object
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select();
 
-// creates memoized selector with result data so only if selectUsersResult changes will trigger re-render, for App optimization
+// creates memoized selector with result data so only if selectUsersResult changes will re-run the output, for App optimization
 const selectUsersData = createSelector(
     selectUsersResult,
     usersResult => usersResult.data // normalized state object with ids & entities

@@ -37,9 +37,14 @@ From the client directory run: `npm install`
 ## Environment variables
 
 On the server directory create a .env file and add into it:
-    NODE_ENV=development
-    DATABASE_URI= <your mongodb connection string>
-    ACCESS_TOKEN_SECRET= <a unique hex 64 secret token string>
+    NODE_ENV=<development> or <production>
+    DATABASE_USER=<mongodb user connection string>
+    DATABASE_PWD=<mongodb password connection string>
+    DATABASE_CLUST=<mongodb cluster connection string>
+    ADMIN_USERNAME=<admin username>
+    ADMIN_EMAIL=<admin email>
+    ADMIN_PWD=<admin password>
+    ACCESS_TOKEN_SECRET=<a unique hex 64 secret token string>
     REFRESH_TOKEN_SECRET=<an other hex 64 secret token string>
 
 

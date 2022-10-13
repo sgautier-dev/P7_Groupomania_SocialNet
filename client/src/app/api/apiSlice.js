@@ -11,7 +11,7 @@ const baseQuery = fetchBaseQuery({
 
         if (token) {
             headers.set("authorization", `Bearer ${token}`)
-        };
+        }
         return headers;//applied to every req sent
     }
 });
@@ -45,7 +45,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     }
 
     return result;
-};
+}
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,

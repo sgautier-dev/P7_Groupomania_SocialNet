@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('express-async-errors');//handling async errors in order to avoir try/catch in async func
+const createAdmin = require('./middleware/createAdmin')
 
 const express = require('express');
 const app = express();
@@ -58,3 +59,5 @@ mongoose.connection.on('error', err => {
     console.log(err);
     logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log');
 });
+
+createAdmin();

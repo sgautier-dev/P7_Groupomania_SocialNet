@@ -38,7 +38,7 @@ const PostsList = () => {
         const handleSearchChange = (e) => {
             if (!e.target.value) return setSearchResults(ids);
 
-            const resultsArray = ids.filter(postId => entities[postId].username.toLowerCase().includes(e.target.value) || entities[postId].text.toLowerCase().includes(e.target.value));
+            const resultsArray = ids.filter(postId => entities[postId].username.toLowerCase().includes(e.target.value.toLowerCase()) || entities[postId].text.toLowerCase().includes(e.target.value.toLowerCase()));
 
             setSearchResults(resultsArray);
         };
