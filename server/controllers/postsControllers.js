@@ -88,7 +88,7 @@ const updatePost = async (req, res) => {
             });
         }
         post.imageUrl = imageUrl;
-    };
+    }
 
     post.user = user;
     post.text = text;
@@ -129,7 +129,7 @@ const deletePost = async (req, res) => {
                 }
             });
         }
-    };
+    }
 
     const result = await post.deleteOne();
 

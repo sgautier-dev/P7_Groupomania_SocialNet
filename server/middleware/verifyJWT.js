@@ -6,7 +6,7 @@ const verifyJWT = (req, res, next) => {
     //verifying that Bearer exists in auth header
     if (!authHeader?.startsWith('Bearer ')) {
         return res.status(401).json({ message: 'Non autorisé' })
-    };
+    }
 
     //retrieving token from header
     const token = authHeader.split(' ')[1];

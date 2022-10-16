@@ -16,7 +16,7 @@ const PublicLayout = () => {
                 </span>
             </p>
         );
-    };
+    }
     if (pathname === '/login') {
         footerLink = (
             <p>
@@ -26,7 +26,7 @@ const PublicLayout = () => {
                 </span>
             </p>
         );
-    };
+    }
 
     return (
         <section className="public">

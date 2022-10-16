@@ -26,7 +26,7 @@ const PostsList = () => {
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message}</p>
-    };
+    }
 
     if (isSuccess) {
         const { ids, entities } = posts;
@@ -62,7 +62,7 @@ const PostsList = () => {
                 {listContent}
             </section>
         );
-    };
+    }
 
     return content;
 

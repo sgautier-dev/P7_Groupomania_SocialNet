@@ -12,14 +12,14 @@ const login = async (req, res) => {
 
     if (!email || !password) {
         return res.status(400).json({ message: 'Tous les champs sont requis' })
-    };
+    }
 
     const foundUser = await User.findOne({ email }).exec();
 
     //if does not exists or inactive
     if (!foundUser || !foundUser.active) {
         return res.status(401).json({ message: 'Non autorisé' })
-    };
+    }
 
     const match = await bcrypt.compare(password, foundUser.password);
 

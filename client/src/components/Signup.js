@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAddNewUserMutation } from "../features/users/usersApiSlice";
+import { useRegisterUserMutation } from "../features/users/usersApiSlice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -9,12 +9,12 @@ const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/;
 
 const Signup = () => {
-    const [addNewUser, {
+    const [registerUser, {
         isLoading,
         isSuccess,
         isError,
         error
-    }] = useAddNewUserMutation();
+    }] = useRegisterUserMutation();
 
     const userRef = useRef();
     const errRef = useRef();
@@ -67,7 +67,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (canSave) {
-            await addNewUser({ username, email, password });
+            await registerUser({ username, email, password });
         }
     }
 

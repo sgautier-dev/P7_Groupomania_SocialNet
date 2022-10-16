@@ -58,7 +58,7 @@ const EditUserForm = ({ user }) => {
                 navigate('/dash/users')
             } else navigate('/dash')
             
-        };
+        }
 
     }, [isSuccess, isDelSuccess, navigate, isAdmin]);
 

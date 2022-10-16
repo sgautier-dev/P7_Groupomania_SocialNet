@@ -51,7 +51,7 @@ const Post = ({ postId }) => {
             >
                 <FontAwesomeIcon icon={faTrashCan} />
             </button>)
-        };
+        }
 
         const image = post.imageUrl ? (<img
             src={post.imageUrl}

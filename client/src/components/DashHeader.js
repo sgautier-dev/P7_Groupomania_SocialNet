@@ -138,7 +138,7 @@ const DashHeader = () => {
                 {logoutButton}
             </>
         )
-    };
+    }
 
     const content = (
         <>

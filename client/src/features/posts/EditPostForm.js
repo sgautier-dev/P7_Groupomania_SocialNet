@@ -117,7 +117,7 @@ const EditPostForm = ({ post, users }) => {
             >
                 {options}
             </select></div>)
-    };
+    }
 
 
     const content = (

@@ -46,7 +46,7 @@ const NewPostForm = ({ users }) => {
 
         if (canSave) {
             await addNewPost(data)
-        };
+        }
     };
 
     const options = users.map(user => {
@@ -72,7 +72,7 @@ const NewPostForm = ({ users }) => {
             >
                 {options}
             </select></div>)
-    };
+    }
 
     const errClass = isError ? "errmsg" : "offscreen";
     const validTextClass = !text ? "form__input--incomplete" : '';
