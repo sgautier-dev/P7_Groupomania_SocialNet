@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 /* || RESET */
 * {
@@ -14,15 +14,25 @@ select {
 	font: inherit;
 }
 
+img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
 /* || VARIABLES */
 
 :root {
+	/* FONTS */
+	--FF: "Lato", sans-serif;
+	--FS: clamp(1rem, 2.2vh, 1.5rem);
+
 	/* COLORS */
 	--PRIM-COLOR: #fd2d01;
-	--SECON-HOVER: #ffd7d7;
+	--SECON-COLOR: #ffd7d7;
 	--TERTI-COLOR: #4e5166;
 	--BORDER-COLOR: #fff;
-	--WHITE-COLOR: #fff;
+	--LIGHT-COLOR: #fff;
 	--INACTIVE: lightgray;
 	--LINK-COLOR: #ffd7d7;
 	--TABLE-BGCOLOR: #fff;
@@ -30,6 +40,22 @@ select {
 	--ICON-COLOR: #fff;
 	--REGISTER-VALID: limegreen;
 	--REGISTER-INVALID: red;
+
+	/* BORDERS */
+	--BORDER-S: 1px solid;
+	--BORDER-L: 2px solid;
+	--SHADOW: 0 0 5px var(--SECON-COLOR);
+	--BORDER-RADIUS: 15px;
+}
+
+/* || SETTINGS FOR DARK MODE */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--BORDER-COLOR: whitesmoke;
+		--LIGHT-COLOR: whitesmoke;
+		--TABLE-BGCOLOR: whitesmoke;
+		--ICON-COLOR: whitesmoke;
+	}
 }
 
 /* || UTILITY CLASSES */
@@ -69,7 +95,7 @@ select {
 .icon-button:hover,
 .icon-button:focus-visible {
 	transform: scale(1.2);
-	color: var(--SECON-HOVER);
+	color: var(--SECON-COLOR);
 }
 
 .icon-button[disabled] {
@@ -83,11 +109,16 @@ select {
 
 /* || GENERAL STYLES */
 
+html {
+	scroll-behavior: smooth;
+	/* font-size: var(--FS); */
+	font-family: var(--FF);
+}
+
 body {
-	font-family: "Lato", sans-serif;
 	min-height: 100vh;
 	background-color: var(--TERTI-COLOR);
-	color: var(--WHITE-COLOR);
+	color: var(--LIGHT-COLOR);
 	background-image: url("./img/background.jpg");
 	background-size: cover;
 	background-blend-mode: overlay;
@@ -115,7 +146,7 @@ a:visited {
 
 a:hover,
 a:focus-visible {
-	color: var(--SECON-HOVER);
+	color: var(--SECON-COLOR);
 }
 
 /* || PAGES */
@@ -139,7 +170,7 @@ a:focus-visible {
 
 .public__button {
 	padding: 0.5em;
-	border-radius: 15px;
+	border-radius: var(--BORDER-RADIUS);
 }
 
 .public__link {
@@ -150,8 +181,8 @@ a:focus-visible {
 .public__main,
 .login {
 	flex-grow: 1;
-	border-top: 2px solid var(--BORDER-COLOR);
-	border-bottom: 2px solid var(--BORDER-COLOR);
+	border-top: var(--BORDER-L) var(--BORDER-COLOR);
+	border-bottom: var(--BORDER-L) var(--BORDER-COLOR);
 	padding: 1em 0;
 }
 
@@ -168,10 +199,34 @@ a:focus-visible {
 	align-items: center;
 	justify-content: center;
 	min-height: 70vh;
+	position: relative;
 }
 
 .public__logo {
-	width: 350px;
+	width: 300px;
+	position: absolute;
+	left: -150%;
+	margin-left: -150px;
+	top: 50%;
+	margin-top: -50px;
+	animation: showPublicLogo 1.5s ease-in-out 0.1s forwards;
+}
+
+@keyframes showPublicLogo {
+	0% {
+		left: -50%;
+		transform: scaleY(0);
+	}
+
+	80% {
+		left: 30%;
+		transform: scaleY(-1.2);
+	}
+
+	100% {
+		left: 50%;
+		transform: scaleY(1);
+	}
 }
 
 .logo {
@@ -183,7 +238,7 @@ a:focus-visible {
 
 .public__logo:hover {
 	transform: scale(1.2);
-	color: var(--SECON-HOVER);
+	color: var(--SECON-COLOR);
 }
 
 /* || REGISTER */
@@ -191,7 +246,7 @@ a:focus-visible {
 	font-size: 1rem;
 	border-radius: 0.5rem;
 	background: var(--TERTI-COLOR);
-	color: var(--WHITE-COLOR);
+	color: var(--LIGHT-COLOR);
 	padding: 0.25rem;
 	position: relative;
 	bottom: -10px;
@@ -227,7 +282,7 @@ a:focus-visible {
 	z-index: 1;
 	background-color: var(--TERTI-COLOR);
 	padding: 0 0.5em;
-	border-bottom: 1px solid var(--BORDER-COLOR);
+	border-bottom: var(--BORDER-S) var(--BORDER-COLOR);
 }
 
 .dash-header__container {
@@ -260,7 +315,7 @@ a:focus-visible {
 	z-index: 1;
 	background-color: var(--TERTI-COLOR);
 	padding: 0.5em;
-	border-top: 1px solid var(--BORDER-COLOR);
+	border-top: var(--BORDER-S) var(--BORDER-COLOR);
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
@@ -279,6 +334,14 @@ thead,
 tbody,
 tr {
 	display: contents; /* to be able to use grid on table */
+}
+
+thead th:first-child {
+	border-top-left-radius: var(--BORDER-RADIUS);
+}
+
+thead th:last-child {
+	border-top-right-radius: var(--BORDER-RADIUS);
 }
 
 .table {
@@ -306,7 +369,7 @@ tr {
 .table__cell {
 	background-color: var(--TABLE-BGCOLOR);
 	text-align: left;
-	border: 1px solid var(--TABLE-COLOR);
+	border: var(--BORDER-S) var(--TABLE-COLOR);
 	padding: 0.5em;
 }
 
@@ -322,9 +385,10 @@ tr {
 /* ||  POST LIST */
 article {
 	margin: 0.5em;
-	border: 2px solid var(--BORDER-COLOR);
+	border: var(--BORDER-L) var(--BORDER-COLOR);
 	border-radius: 10px;
 	padding: 1em;
+	box-shadow: var(--SHADOW);
 }
 
 .excerpt {
@@ -343,16 +407,14 @@ article {
 }
 
 img {
-	max-height: 500px;
-	width: 100%;
-	border-radius: 15px;
+	border-radius: var(--BORDER-RADIUS);
 	object-fit: cover;
 	margin-bottom: 10px;
 }
 
 .liked {
 	transform: scale(1.2);
-	color: var(--SECON-HOVER);
+	color: var(--SECON-COLOR);
 }
 
 .unliked {
@@ -369,7 +431,7 @@ img {
 .search {
 	width: 60%;
 	margin: auto;
-	border: 2px solid var(--TABLE-COLOR);
+	border: var(--BORDER-L) var(--TABLE-COLOR);
 	border-radius: 2em;
 	overflow: hidden;
 	font-size: 1rem;
@@ -381,7 +443,7 @@ img {
 
 .search__button,
 .search__input {
-	background-color: var(--WHITE-COLOR);
+	background-color: var(--LIGHT-COLOR);
 	border: none;
 	outline: none;
 }
@@ -405,11 +467,11 @@ img {
 .post__readmore {
 	font-weight: bold;
 	cursor: pointer;
-	color: var(--SECON-HOVER);
+	color: var(--SECON-COLOR);
 }
 
 .post__info {
-	color: var(--SECON-HOVER);
+	color: var(--SECON-COLOR);
 }
 
 /* ||  USER */
@@ -449,7 +511,7 @@ img {
 .form__input,
 .form__submit-button {
 	padding: 0.5em;
-	border-radius: 15px;
+	border-radius: var(--BORDER-RADIUS);
 }
 
 .form__submit-button {
@@ -462,8 +524,8 @@ img {
 }
 
 .form__input--incomplete {
-	border: 1px solid var(--PRIM-COLOR);
-	outline: 1px solid var(--PRIM-COLOR);
+	border: var(--BORDER-S) var(--PRIM-COLOR);
+	outline: var(--BORDER-S) var(--PRIM-COLOR);
 }
 
 .form__checkbox {
@@ -483,11 +545,11 @@ img {
 	gap: 0.5em;
 	position: relative;
 	right: 1em;
-	bottom: 1em
+	bottom: 1em;
 }
 
 .form__file {
-	border-radius: 15px;
+	border-radius: var(--BORDER-RADIUS);
 }
 
 .form__row {
@@ -522,7 +584,7 @@ img {
 	.icon-button {
 		font-size: 1.5rem;
 	}
-	
+
 	.search {
 		font-size: 0.5rem;
 	}
@@ -562,14 +624,10 @@ img {
 	.user__roles {
 		display: block;
 	}
-
-
 }
 
 @media screen and (min-width: 1600px) {
-
 	.dash-container {
 		padding: 1em 18em;
 	}
-
 }

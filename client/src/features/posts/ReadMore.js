@@ -9,7 +9,7 @@ const ReadMore = ({text}) => {
       {isReadMore ? text.slice(0, 200): text }
       {text.length > 200 &&
         <span className='post__readmore' onClick={toggleReadMore}>
-          {isReadMore ? '... Afficher la suite' : '^Afficher moins'}
+          {isReadMore ? '...👇Afficher la suite' : '👆Afficher moins'}
         </span>
       }
     </p>

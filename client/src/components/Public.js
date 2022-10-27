@@ -5,7 +5,7 @@ const Public = () => {
     const content = (
         <section className="public">
             <header>
-                <h1>Bienvenue sur <span className="nowrap">GroupoNet!</span></h1>
+                <h1>Bienvenue <span className="nowrap">sur GroupoNet!</span></h1>
             </header>
             <main className="public__main">
                 <div className="public-logo__container">
@@ -19,7 +19,7 @@ const Public = () => {
                 </div>
             </main>
             <footer>
-                <p>Le réseau social d'entreprise de Groupomania.</p>
+                <p><span className="nowrap">Le réseau social d'entreprise</span> de Groupomania.</p>
             </footer>
         </section>
 
