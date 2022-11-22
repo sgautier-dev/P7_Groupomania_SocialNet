@@ -204,27 +204,26 @@ a:focus-visible {
 
 .public__logo {
 	width: 300px;
-	position: absolute;
+	/* position: absolute;
 	left: -150%;
 	margin-left: -150px;
-	top: 50%;
-	margin-top: -50px;
+	top: 50%; */
 	animation: showPublicLogo 1.5s ease-in-out 0.1s forwards;
 }
 
 @keyframes showPublicLogo {
 	0% {
-		left: -50%;
+		/* left: -50%; */
 		transform: scaleY(0);
 	}
 
 	80% {
-		left: 30%;
+		/* left: 30%; */
 		transform: scaleY(-1.2);
 	}
 
 	100% {
-		left: 50%;
+		/* left: 50%; */
 		transform: scaleY(1);
 	}
 }

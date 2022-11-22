@@ -59,7 +59,7 @@ const EditPostForm = ({ post, users }) => {
     }
 
     const onDeletePostClicked = async () => {
-        await deletePost({ id: post.id, imageUrl: post.imageUrl })
+        if (window.confirm('Voulez vous vraiment supprimer ce post?')) await deletePost({ id: post.id, imageUrl: post.imageUrl })
     }
 
     const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });

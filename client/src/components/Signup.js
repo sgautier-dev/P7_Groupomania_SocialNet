@@ -77,7 +77,7 @@ const Signup = () => {
                 <>
                     <h1>Inscription réussie!</h1>
                     <p className="line public__link">
-                        <Link to="/login">S'identifier</Link>
+                        <Link to="/login">Veuillez vous identifier pour accéder à GroupoNet</Link>
                     </p>
                 </>
             ) : (

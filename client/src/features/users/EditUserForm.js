@@ -80,7 +80,7 @@ const EditUserForm = ({ user }) => {
     };
 
     const onDeleteUserClicked = async () => {
-        await deleteUser({ id: user.id })
+        if (window.confirm('Voulez vous vraiment supprimer cet utilisateur?')) await deleteUser({ id: user.id })
     };
 
     let canSave //with or without pwd change

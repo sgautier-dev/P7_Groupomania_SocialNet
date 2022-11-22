@@ -32,7 +32,7 @@ const Post = ({ postId }) => {
         const handleEdit = () => navigate(`/dash/posts/${postId}`);
 
         const onDeletePostClicked = async () => {
-            await deletePost({ id: post.id, imageUrl: post.imageUrl });
+            if (window.confirm('Voulez vous vraiment supprimer ce post?')) await deletePost({ id: post.id, imageUrl: post.imageUrl });
         };
 
         let deleteButton = null;
