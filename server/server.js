@@ -13,6 +13,7 @@ const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 const PORT = process.env.PORT || 3500;
 
@@ -24,6 +25,9 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));// with Cors options
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+  }));// Add middleware for securing HTTP headers
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
