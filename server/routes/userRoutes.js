@@ -11,7 +11,7 @@ router.use(verifyJWT);//applying to all user routes below
 
 router.route('/')
     .get(usersControllers.getAllUsers)
-    .post(credentialValid, usersControllers.createUser)
+    .post(usersControllers.createUser)
     .patch(usersControllers.updateUser)
     .delete(usersControllers.deleteUser);
 
