@@ -22,12 +22,13 @@ console.log(process.env.NODE_ENV);
 connectDB();
 
 //app.use(logger);//Uncomment if needed requests log
-app.use(express.json());
-app.use(cookieParser());
 app.use(cors(corsOptions));// with Cors options
 app.use(helmet({
     crossOriginResourcePolicy: false,
   }));// Add middleware for securing HTTP headers
+app.use(express.json());
+app.use(cookieParser());
+
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 

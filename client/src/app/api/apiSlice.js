@@ -3,8 +3,6 @@ import { setCredentials } from '../../features/auth/authSlice';
 
 const appUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3500' : 'https://grouponetapi.onrender.com';
 
-console.log(appUrl)
-
 const baseQuery = fetchBaseQuery({
     baseUrl: appUrl,
     //to attach cookie in requests

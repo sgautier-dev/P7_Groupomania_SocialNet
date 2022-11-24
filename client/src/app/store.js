@@ -5,8 +5,6 @@ import authReducer from '../features/auth/authSlice';
 
 const devMode = process.env.NODE_ENV === 'development' ? true : false;
 
-console.log(devMode)
-
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
