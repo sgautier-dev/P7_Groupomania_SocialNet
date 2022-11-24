@@ -1,8 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials } from '../../features/auth/authSlice';
 
+const appUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3500' : 'https://grouponetapi.onrender.com';
+
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://grouponet.onrender.com',
+    baseUrl: appUrl,
     //to attach cookie in requests
     credentials: 'include',
     //setting authorization header with current token
