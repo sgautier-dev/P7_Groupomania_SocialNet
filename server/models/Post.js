@@ -11,6 +11,9 @@ const postSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        filename: {
+            type: String
+        },
         imageUrl: {
             type: String
         },

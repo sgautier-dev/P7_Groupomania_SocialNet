@@ -2,6 +2,13 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const mongoose = require('mongoose');
 const fs = require('fs');//access to file system
+const { PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3")
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
+const bucketName = process.env.BUCKET_NAME
+const s3 = require('../config/s3')
+const { v4: uuid } = require('uuid')
+//const sharp = require('sharp')
+
 
 /**
 * @desc Get all posts with user
@@ -20,6 +27,23 @@ const getAllPosts = async (req, res) => {
     // Add username to each post before sending the response 
     const postsWithUser = await Promise.all(posts.map(async (post) => {
         const user = await User.findById(post.user).lean().exec();
+
+        if (post.filename) {
+
+            const getParams = {
+                Bucket: bucketName,
+                Key: post.filename,
+            }
+
+            const command = new GetObjectCommand(getParams)
+
+            post.imageUrl = await getSignedUrl(
+                s3,
+                command,
+                { expiresIn: 60 }// signed url expiry in 60 seconds
+            )
+        }
+
         return { ...post, username: user.username };
     }))
 
@@ -34,9 +58,31 @@ const getAllPosts = async (req, res) => {
 const createNewPost = async (req, res) => {
     // console.log(req.body);
     // console.log(req.file);
- 
+
+    let filename = ''
+    const imageUrl = ''
+
+    if (req.file) {
+
+        filename = uuid()//generate unique filename
+
+        // const fileBuffer = await sharp(req.file.buffer)
+        //     .resize({ width: 1280, height: 720, fit: "contain" })
+        //     .toBuffer()
+
+        const uploadParams = {
+            Bucket: bucketName,
+            Key: filename,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype,
+        }
+
+        await s3.send(new PutObjectCommand(uploadParams))
+
+    }
+
     const { user, text } = req.body;
-    const imageUrl = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';// if image attached
+    //const imageUrl = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';// if image attached
     const likes = [];
 
     // Confirm data
@@ -45,7 +91,7 @@ const createNewPost = async (req, res) => {
     }
 
     // Create and store the new post 
-    const post = await Post.create({ user, text, imageUrl, likes });
+    const post = await Post.create({ user, text, imageUrl, filename, likes });
 
     if (post) { // Created 
         return res.status(201).json({ message: 'Nouveau post créé' });
