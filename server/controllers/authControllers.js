@@ -37,11 +37,15 @@ const login = async (req, res) => {
         { expiresIn: '15m' }
     );
 
+    // console.log('access token', accessToken)
+
     const refreshToken = jwt.sign(
         { "email": foundUser.email },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '1d' }
     );
+
+    // console.log('refresh token', refreshToken)
 
     // Create secure cookie with refresh token 
     res.cookie('jwt', refreshToken, {
@@ -50,6 +54,8 @@ const login = async (req, res) => {
         sameSite: 'None', //cross-site cookie 
         maxAge: 1 * 24 * 60 * 60 * 1000 //cookie expiry: set to match refreshToken
     });
+
+    // console.log('login res cookie', res)
 
     // Send accessToken with UserInfo 
     res.json({ accessToken });
@@ -63,7 +69,11 @@ const login = async (req, res) => {
 const refresh = (req, res) => {
     const cookies = req.cookies;
 
+    // console.log('refresh cookie', req.cookies)
+
     if (!cookies?.jwt) return res.status(401).json({ message: 'Non autorisé' });
+
+    // console.log('refresh, cookie exists')
 
     const refreshToken = cookies.jwt;
 

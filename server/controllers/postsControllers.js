@@ -1,12 +1,8 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
 const mongoose = require('mongoose');
-const fs = require('fs');//access to file system
-const { PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3")
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
-const bucketName = process.env.BUCKET_NAME
-const s3 = require('../config/s3')
-const { v4: uuid } = require('uuid')
+//const fs = require('fs');//access to file system
+const { uploadFile, deleteFile, getFile } = require('../config/s3')
 //const sharp = require('sharp')
 
 
@@ -28,21 +24,10 @@ const getAllPosts = async (req, res) => {
     const postsWithUser = await Promise.all(posts.map(async (post) => {
         const user = await User.findById(post.user).lean().exec();
 
-        if (post.filename) {
+        // if (post.filename) {
 
-            const getParams = {
-                Bucket: bucketName,
-                Key: post.filename,
-            }
-
-            const command = new GetObjectCommand(getParams)
-
-            post.imageUrl = await getSignedUrl(
-                s3,
-                command,
-                { expiresIn: 60 }// signed url expiry in 60 seconds
-            )
-        }
+        //     post.imageUrl = await getFile(post.filename)
+        // }
 
         return { ...post, username: user.username };
     }))
@@ -60,24 +45,12 @@ const createNewPost = async (req, res) => {
     // console.log(req.file);
 
     let filename = ''
-    const imageUrl = ''
+    let imageUrl = ''
 
     if (req.file) {
 
-        filename = uuid()//generate unique filename
-
-        // const fileBuffer = await sharp(req.file.buffer)
-        //     .resize({ width: 1280, height: 720, fit: "contain" })
-        //     .toBuffer()
-
-        const uploadParams = {
-            Bucket: bucketName,
-            Key: filename,
-            Body: req.file.buffer,
-            ContentType: req.file.mimetype,
-        }
-
-        await s3.send(new PutObjectCommand(uploadParams))
+        filename = await uploadFile(req.file)
+        imageUrl = process.env.CLOUDFRONT_DOMAIN + filename
 
     }
 
@@ -122,18 +95,13 @@ const updatePost = async (req, res) => {
         return res.status(400).json({ message: 'Post non trouvé' });
     }
 
-    // if image attached delete old image file from disk and replace imageUrl
+    // if image attached delete old image file from s3 and set new filename
     if (req.file) {
-        const imageUrl = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-        const filename = post.imageUrl.split('/images/')[1];
-        if (filename) {
-            fs.unlink(`public/images/${filename}`, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        }
-        post.imageUrl = imageUrl;
+
+        filename = await uploadFile(req.file)
+        await deleteFile(post.filename)
+        post.filename = filename
+        post.imageUrl = process.env.CLOUDFRONT_DOMAIN + filename
     }
 
     post.user = user;
@@ -165,16 +133,19 @@ const deletePost = async (req, res) => {
         return res.status(400).json({ message: 'Post non trouvé' });
     }
 
-    // if image attached delete image file from disk
+    // if image attached delete image file from s3
     if (imageUrl) {
-        const filename = imageUrl.split('/images/')[1];
-        if (filename) {
-            fs.unlink(`public/images/${filename}`, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        }
+
+        await deleteFile(post.filename)
+
+        // const filename = imageUrl.split('/images/')[1];
+        // if (filename) {
+        //     fs.unlink(`public/images/${filename}`, (err) => {
+        //         if (err) {
+        //             console.log(err);
+        //         }
+        //     });
+        // }
     }
 
     const result = await post.deleteOne();
