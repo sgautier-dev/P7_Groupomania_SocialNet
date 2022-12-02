@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {clearCookieOptions, setCookieOptions} = require('../middleware/cookies')
+const { clearCookieOptions, setCookieOptions } = require('../middleware/cookies')
 
 /**
 * @desc Login
@@ -21,12 +21,24 @@ const login = async (req, res) => {
 
     //if does not exists or inactive
     if (!foundUser || !foundUser.active) {
-        return res.status(401).json({ message: 'Non autorisé' })
+        return res.status(401).json({ message: 'Email ou mot de passe invalide' })
     }
 
     const match = await bcrypt.compare(password, foundUser.password);
 
-    if (!match) return res.status(401).json({ message: 'Non autorisé' });
+    if (!match) return res.status(401).json({ message: 'Email ou mot de passe invalide' });
+
+    //clearing invalid refresh tokens at login
+    if (foundUser.refreshToken.length) {
+        foundUser.refreshToken.forEach(rt => jwt.verify(
+            rt,
+            process.env.REFRESH_TOKEN_SECRET,
+            async (err, decoded) => {
+                if (err) foundUser.refreshToken.shift();
+            }
+        ))
+        await foundUser.save();
+    }
 
     const accessToken = jwt.sign(
         {

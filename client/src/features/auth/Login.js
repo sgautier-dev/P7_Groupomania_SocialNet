@@ -44,7 +44,7 @@ const Login = () => {
       } else if (err.status === 400) {
         setErrMsg('E-mail ou mot de passe manquant');
       } else if (err.status === 401) {
-        setErrMsg('Non autorisé');
+        setErrMsg('Email ou mot de passe invalide');
       } else {
         setErrMsg(err.data?.message);
       }
