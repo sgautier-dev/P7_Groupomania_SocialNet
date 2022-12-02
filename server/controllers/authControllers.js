@@ -10,7 +10,7 @@ const {clearCookieOptions, setCookieOptions} = require('../middleware/cookies')
 */
 const login = async (req, res) => {
     const cookies = req.cookies;
-    console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
+    //console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -40,8 +40,6 @@ const login = async (req, res) => {
         { expiresIn: '15m' }
     );
 
-    // console.log('access token', accessToken)
-
     const newRefreshToken = jwt.sign(
         { "email": foundUser.email },
         process.env.REFRESH_TOKEN_SECRET,
@@ -66,7 +64,7 @@ const login = async (req, res) => {
 
         // Detected refresh token reuse!
         if (!foundToken) {
-            console.log('attempted refresh token reuse at login!')
+            //console.log('attempted refresh token reuse at login!')
             // clear out ALL previous refresh tokens
             newRefreshTokenArray = [];
         }
@@ -76,15 +74,10 @@ const login = async (req, res) => {
 
     // Saving refreshToken with current user
     foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-    const result = await foundUser.save();
-    console.log(result);
-
-    // console.log('refresh token', refreshToken)
+    await foundUser.save();
 
     // Create secure cookie with refresh token 
     res.cookie('jwt', newRefreshToken, setCookieOptions);
-
-    // console.log('login res cookie', res)
 
     // Send accessToken with UserInfo 
     res.json({ accessToken });
@@ -98,8 +91,6 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
     const cookies = req.cookies;
 
-    console.log('refresh cookie', cookies)
-
     if (!cookies?.jwt) return res.status(401).json({ message: 'Non autorisé' });
 
     const refreshToken = cookies.jwt;
@@ -107,21 +98,19 @@ const refresh = async (req, res) => {
 
     const foundUser = await User.findOne({ refreshToken }).exec();
 
-    console.log('foundUser', foundUser)
+    //console.log('foundUser', foundUser)
 
     // Detected refresh token reuse!
     if (!foundUser) {
-        console.log('in !foundUser')
         jwt.verify(
             refreshToken,
             process.env.REFRESH_TOKEN_SECRET,
             async (err, decoded) => {
                 if (err) return res.sendStatus(403).json({ message: 'Interdit' });
-                console.log('attempted refresh token reuse!')
+                //console.log('attempted refresh token reuse!')
                 const hackedUser = await User.findOne({ email: decoded.email }).exec();
                 hackedUser.refreshToken = [];
-                const result = await hackedUser.save();
-                console.log(result);
+                await hackedUser.save();
             }
         )
         return res.sendStatus(403).json({ message: 'Interdit' });
@@ -129,19 +118,14 @@ const refresh = async (req, res) => {
 
     const newRefreshTokenArray = foundUser.refreshToken.filter(rt => rt !== refreshToken);
 
-    console.log('newRefreshTokenArray', newRefreshTokenArray)
-
-    console.log('refreshToken', refreshToken)
-
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         async (err, decoded) => {
             if (err) {
-                console.log('expired refresh token')
+                //console.log('expired refresh token')
                 foundUser.refreshToken = [...newRefreshTokenArray];
-                const result = await foundUser.save();
-                console.log(result);
+                await foundUser.save();
             }
 
             if (err || foundUser.email !== decoded.email) return res.status(403).json({ message: 'Interdit' });
@@ -159,8 +143,6 @@ const refresh = async (req, res) => {
                 { expiresIn: '15m' }
             );
 
-            console.log('accessToken', accessToken)
-
             const newRefreshToken = jwt.sign(
                 { "email": foundUser.email },
                 process.env.REFRESH_TOKEN_SECRET,
@@ -169,9 +151,7 @@ const refresh = async (req, res) => {
 
             // Saving refreshToken with current user
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-            const result = await foundUser.save();
-
-            console.log('user with new refresh token', result)
+            await foundUser.save();
 
             // Creates Secure Cookie with refresh token
             res.cookie('jwt', newRefreshToken, setCookieOptions);
@@ -187,8 +167,8 @@ const refresh = async (req, res) => {
 */
 const logout = async (req, res) => {
     const cookies = req.cookies;
-    console.log('logout cookie', cookies)
-    if (!cookies?.jwt) return res.sendStatus(204); //No content
+
+    if (!cookies?.jwt) return res.sendStatus(204).json({ message: 'No cookie attached to session' });
 
     const refreshToken = cookies.jwt;
 
@@ -201,8 +181,7 @@ const logout = async (req, res) => {
 
     // Delete refreshToken in db
     foundUser.refreshToken = foundUser.refreshToken.filter(rt => rt !== refreshToken);
-    const result = await foundUser.save();
-    console.log(result);
+    await foundUser.save();
 
     res.clearCookie('jwt', clearCookieOptions);
     res.json({ message: 'Cookie cleared' });

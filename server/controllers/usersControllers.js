@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
 const bcrypt = require('bcrypt');
+const sendEmail = require('../middleware/sendEmail')
 
 /**
 * @desc Create user on signup page
@@ -20,6 +21,11 @@ const registerUser = async (req, res) => {
     const user = await User.create(userObject);
 
     if (user) { //created
+        sendEmail({
+            to: 'sgautier.dev@gmail.com',
+            subject: `Nouvel utilisateur ${username} créé`,
+            text: `Nouvel utilisateur ${username} ${email} à été créé`,
+        })
         res.status(201).json({ message: `Nouvel utilisateur ${username} créé` });
     } else {
         res.status(400).json({ message: `Données utilisateur invalides reçues` });
