@@ -1,9 +1,9 @@
 
 const clearCookieOptions = {
     httpOnly: true, //accessible only by web server 
-    // domain: process.env.NODE_ENV === 'development' ? 'localhost' : 'grouponet.onrender.com',
+    domain: process.env.NODE_ENV === 'development' ? 'localhost' : 'grouponet.onrender.com',
     secure: process.env.NODE_ENV === 'production' ? true : false, //https
-    sameSite: 'Lax', //cross-site cookie 
+    sameSite: 'Strict', //cross-site cookie 
 }
 
 console.log('clearCookieOptions', clearCookieOptions)
