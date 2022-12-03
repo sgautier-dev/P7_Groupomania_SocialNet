@@ -28,7 +28,7 @@ const credentialValid = async (req, res, next) => {
     }
 
     //Check for duplicates, exec() is recommended to be used with promise query by mongoose doc, collation is used to set case insensitivity
-    const duplicateEmail = await User.findOne({ email }).lean().exec();
+    const duplicateEmail = await User.findOne({ email: email.toLowerCase() }).lean().exec();
     const duplicateUsername = await User.findOne({ username }).collation({ locale: 'fr', strength: 2 }).lean().exec();
 
     if (duplicateEmail) {
