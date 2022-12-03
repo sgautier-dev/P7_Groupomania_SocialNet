@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Description
 
-GroupoNet App, Groupomania's employees social network. In development.
+GroupoNet App, Groupomania's employees social network.
 
 ## Technologies
 
@@ -23,6 +23,7 @@ Sébastien Gautier
     https://redux.js.org/
     https://www.codecademy.com/
     https://openclassrooms.com/
+    Dave Grey
 
 ## Requirements
 

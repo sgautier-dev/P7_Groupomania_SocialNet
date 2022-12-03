@@ -54,7 +54,7 @@ const login = async (req, res) => {
         const newRefreshToken = jwt.sign(
             { "email": foundUser.email },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '2h' }
         );
 
         let newRefreshTokenArray =
@@ -159,7 +159,7 @@ const refresh = async (req, res) => {
             const newRefreshToken = jwt.sign(
                 { "email": foundUser.email },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1h' }
+                { expiresIn: '2h' }
             );
 
             // Saving refreshToken with current user
