@@ -17,7 +17,7 @@ const login = async (req, res) => {
         return res.status(400).json({ message: 'Tous les champs sont requis' })
     }
 
-    const foundUser = await User.findOne({ email: email.toLowerCase() }).exec();
+    const foundUser = await User.findOne({ email: email.toLowerCase().trim() }).exec();
 
     //if does not exists or inactive
     if (!foundUser || !foundUser.active) {
