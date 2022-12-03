@@ -26,73 +26,74 @@ const login = async (req, res) => {
 
     const match = await bcrypt.compare(password, foundUser.password);
 
-    if (!match) return res.status(401).json({ message: 'Email ou mot de passe invalide' });
-
-    //clearing invalid refresh tokens at login
-    if (foundUser.refreshToken.length) {
-        foundUser.refreshToken.forEach(rt => jwt.verify(
-            rt,
-            process.env.REFRESH_TOKEN_SECRET,
-            async (err, decoded) => {
-                if (err) foundUser.refreshToken.shift();
-            }
-        ))
-        await foundUser.save();
-    }
-
-    const accessToken = jwt.sign(
-        {
-            "UserInfo": {
-                "userId": foundUser._id.toString(),
-                "username": foundUser.username,
-                "adminRole": foundUser.adminRole
-            }
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15m' }
-    );
-
-    const newRefreshToken = jwt.sign(
-        { "email": foundUser.email },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '1h' }
-    );
-
-    let newRefreshTokenArray =
-        !cookies?.jwt
-            ? foundUser.refreshToken
-            : foundUser.refreshToken.filter(rt => rt !== cookies.jwt);
-
-    if (cookies?.jwt) {
-
-        /* 
-        Scenario added here: 
-            1) User logs in but never uses RT and does not logout 
-            2) RT is stolen
-            3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
-        */
-        const refreshToken = cookies.jwt;
-        const foundToken = await User.findOne({ refreshToken }).exec();
-
-        // Detected refresh token reuse!
-        if (!foundToken) {
-            //console.log('attempted refresh token reuse at login!')
-            // clear out ALL previous refresh tokens
-            newRefreshTokenArray = [];
+    if (match) {
+        //clearing invalid refresh tokens at login
+        if (foundUser.refreshToken.length) {
+            foundUser.refreshToken.forEach(rt => jwt.verify(
+                rt,
+                process.env.REFRESH_TOKEN_SECRET,
+                async (err, decoded) => {
+                    if (err) foundUser.refreshToken.shift();
+                }
+            ))
+            await foundUser.save();
         }
 
-        res.clearCookie('jwt', clearCookieOptions);
+        const accessToken = jwt.sign(
+            {
+                "UserInfo": {
+                    "userId": foundUser._id.toString(),
+                    "username": foundUser.username,
+                    "adminRole": foundUser.adminRole
+                }
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '15m' }
+        );
+
+        const newRefreshToken = jwt.sign(
+            { "email": foundUser.email },
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        let newRefreshTokenArray =
+            !cookies?.jwt
+                ? foundUser.refreshToken
+                : foundUser.refreshToken.filter(rt => rt !== cookies.jwt);
+
+        if (cookies?.jwt) {
+
+            /* 
+            Scenario added here: 
+                1) User logs in but never uses RT and does not logout 
+                2) RT is stolen
+                3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
+            */
+            const refreshToken = cookies.jwt;
+            const foundToken = await User.findOne({ refreshToken }).exec();
+
+            // Detected refresh token reuse!
+            if (!foundToken) {
+                //console.log('attempted refresh token reuse at login!')
+                // clear out ALL previous refresh tokens
+                newRefreshTokenArray = [];
+            }
+
+            res.clearCookie('jwt', clearCookieOptions);
+        }
+
+        // Saving refreshToken with current user
+        foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
+        await foundUser.save();
+
+        // Create secure cookie with refresh token 
+        res.cookie('jwt', newRefreshToken, setCookieOptions);
+
+        // Send accessToken with UserInfo 
+        res.json({ accessToken });
     }
-
-    // Saving refreshToken with current user
-    foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-    await foundUser.save();
-
-    // Create secure cookie with refresh token 
-    res.cookie('jwt', newRefreshToken, setCookieOptions);
-
-    // Send accessToken with UserInfo 
-    res.json({ accessToken });
+    else { res.status(401).json({ message: 'Email ou mot de passe invalide' }); }
 };
 
 /**
