@@ -2,6 +2,7 @@
 const { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3")
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
 const { v4: uuid } = require('uuid')
+const sharp = require('sharp')
 
 const bucketName = process.env.BUCKET_NAME
 const region = process.env.BUCKET_REGION
@@ -19,14 +20,14 @@ const s3 = new S3Client({
 const uploadFile = async (file) => {
     const filename = uuid()//generate unique filename
 
-    // const fileBuffer = await sharp(req.file.buffer)
-    //     .resize({ width: 1280, height: 720, fit: "contain" })
-    //     .toBuffer()
+    const fileBuffer = await sharp(file.buffer)
+        .webp({ quality: 50 })
+        .toBuffer()
 
     const uploadParams = {
         Bucket: bucketName,
         Key: filename,
-        Body: file.buffer,
+        Body: fileBuffer,
         ContentType: file.mimetype,
     }
 

@@ -97,7 +97,7 @@ const NewPostForm = ({ users }) => {
                     onChange={onTextChanged}
                 />
                 <label className="form__label" htmlFor="image">
-                    IMAGE: <span className="post__info">--Formats .jpeg .jpg et .png, 3MB max--</span></label>
+                    IMAGE: <span className="post__info">--Formats .jpeg .jpg .bmp .webp et .png--</span></label>
                 <input
                     className="form__input"
                     type="file"

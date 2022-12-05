@@ -3,8 +3,6 @@ const User = require('../models/User');
 const mongoose = require('mongoose');
 //const fs = require('fs');//access to file system
 const { uploadFile, deleteFile, getFile } = require('../config/s3')
-//const sharp = require('sharp')
-
 
 /**
 * @desc Get all posts with user
