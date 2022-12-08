@@ -4,6 +4,7 @@ import { useAddNewPostMutation } from "./postsApiSlice";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
+import PuffLoader from 'react-spinners/PuffLoader';
 
 const NewPostForm = ({ users }) => {
 
@@ -46,6 +47,7 @@ const NewPostForm = ({ users }) => {
 
         if (canSave) {
             await addNewPost(data)
+            
         }
     };
 
@@ -77,7 +79,11 @@ const NewPostForm = ({ users }) => {
     const errClass = isError ? "errmsg" : "offscreen";
     const validTextClass = !text ? "form__input--incomplete" : '';
 
-    const content = (
+    let content;
+
+    if (isLoading) {content = <PuffLoader color={"#FFF"} />}
+    else {
+    content = (
         <>
             <p className={errClass}>{error?.data?.message}</p>
 
@@ -114,13 +120,13 @@ const NewPostForm = ({ users }) => {
                         title="Sauvegarder"
                         disabled={!canSave}
                     >
-                        <FontAwesomeIcon icon={faSave} />
+                        <FontAwesomeIcon icon={faSave} beat />
                     </button>
                 </div>
 
             </form>
         </>
-    )
+    )}
 
     return content
 }

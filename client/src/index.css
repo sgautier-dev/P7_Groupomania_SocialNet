@@ -544,8 +544,8 @@ img {
 	align-items: center;
 	gap: 0.5em;
 	position: relative;
-	right: 1em;
-	bottom: 1em;
+	right: 3em;
+	bottom: 3em;
 }
 
 .form__file {
@@ -570,7 +570,7 @@ img {
 	}
 
 	.logo {
-		width: 130px;
+		width: 160px;
 	}
 
 	.dash-header__nav {
@@ -582,7 +582,7 @@ img {
 	}
 
 	.icon-button {
-		font-size: 1.5rem;
+		font-size: 1.8rem;
 	}
 
 	

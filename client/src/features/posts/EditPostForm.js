@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
+import PuffLoader from 'react-spinners/PuffLoader';
 
 const EditPostForm = ({ post, users }) => {
     const { isAdmin, username } = useAuth();
@@ -62,8 +63,8 @@ const EditPostForm = ({ post, users }) => {
         if (window.confirm('Voulez vous vraiment supprimer ce post?')) await deletePost({ id: post.id, imageUrl: post.imageUrl })
     }
 
-    const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
-    const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+    // const created = new Date(post.createdAt).toLocaleString('local', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+    // const updated = new Date(post.updatedAt).toLocaleString('local', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
     const options = users.map(user => {
         return (
@@ -98,7 +99,7 @@ const EditPostForm = ({ post, users }) => {
                 onClick={onSavePostClicked}
                 disabled={!canSave}
             >
-                <FontAwesomeIcon icon={faSave} />
+                <FontAwesomeIcon icon={faSave} beat/>
             </button>
         );
     };
@@ -119,8 +120,10 @@ const EditPostForm = ({ post, users }) => {
             </select></div>)
     }
 
+    let content;
 
-    const content = (
+    if (isLoading) {content = <PuffLoader color={"#FFF"} />}
+    else { content = (
         <>
             <p className={errClass}>{errContent}</p>
 
@@ -151,10 +154,10 @@ const EditPostForm = ({ post, users }) => {
                 />
                 <div className="form__row">
                     {ownerSelect}
-                    <div className="form__divider">
+                    {/* <div className="form__divider">
                         <p className="form__created">Created:<br />{created}</p>
                         <p className="form__updated">Updated:<br />{updated}</p>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="form__action-buttons">
                     {saveButton}
@@ -162,7 +165,7 @@ const EditPostForm = ({ post, users }) => {
                 </div>
             </form>
         </>
-    )
+    )}
 
     return content
 }
