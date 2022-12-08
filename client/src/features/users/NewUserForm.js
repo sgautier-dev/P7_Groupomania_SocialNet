@@ -3,6 +3,7 @@ import { useAddNewUserMutation } from "./usersApiSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from "@fortawesome/free-solid-svg-icons";
+import PuffLoader from 'react-spinners/PuffLoader';
 
 const USER_REGEX = /^[A-z][A-Za-zÀ-Ÿà-ÿ-0-9-._\s]{3,23}$/;
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -68,7 +69,10 @@ const NewUserForm = () => {
   const validEmailClass = !validEmail ? 'form__input--incomplete' : '';
   const validPwdClass = !validPassword ? 'form__input--incomplete' : '';
 
-  const content = (
+  let content;
+
+    if (isLoading) {content = <PuffLoader color={"#FFF"} />}
+    else { content = (
     <>
       <p className={errClass}>{error?.data?.message}</p>
 
@@ -118,13 +122,13 @@ const NewUserForm = () => {
               title="Sauvegarder"
               disabled={!canSave}
             >
-              <FontAwesomeIcon icon={faSave} />
+              <FontAwesomeIcon icon={faSave} beat />
             </button>
           </div>
 
       </form>
     </>
-  );
+  )}
 
   return content;
 }

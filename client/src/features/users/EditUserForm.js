@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import PuffLoader from 'react-spinners/PuffLoader';
 
 
 const USER_REGEX = /^[a-zA-Zàâéèëêïîôùüç'\s-]{3,20}$/;
@@ -101,7 +102,10 @@ const EditUserForm = ({ user }) => {
     const errContent = (error?.data?.message || delerror?.data?.message) ?? '';
 
 
-    const content = (
+    let content;
+
+    if (isLoading) {content = <PuffLoader color={"#FFF"} />}
+    else { content = (
         <>
             <p className={errClass}>{errContent}</p>
 
@@ -177,7 +181,7 @@ const EditUserForm = ({ user }) => {
                             onClick={onSaveUserClicked}
                             disabled={!canSave}
                         >
-                            <FontAwesomeIcon icon={faSave} />
+                            <FontAwesomeIcon icon={faSave} beat />
                         </button>
                         <button
                             className="icon-button"
@@ -190,7 +194,7 @@ const EditUserForm = ({ user }) => {
                     </div>
             </form>
         </>
-    )
+    )}
 
     return content
 }
